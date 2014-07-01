@@ -14,5 +14,7 @@ public interface IMusicService {
 	public ArrayList<Music> getMoreSongsOf3Genres(String song_genre,int TransmittedNumber);
 	
 	public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber);
+	
+	public ArrayList<Music> accurateSearch(ArrayList searchKeyList);
 
 }
