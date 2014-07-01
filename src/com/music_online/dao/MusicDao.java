@@ -24,7 +24,7 @@ public class MusicDao {
 		 ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id and song_genre='华语' order by song_popularity DESC limit 10 ";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -105,7 +105,7 @@ public class MusicDao {
     	ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id order by song_popularity DESC limit 10";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -144,7 +144,7 @@ public ArrayList<Music> getMoreSongsOf3Genres(String song_genre,int TransmittedN
     	ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id and song_genre='"+song_genre+"' order by song_popularity DESC limit "+TransmittedNumber+",15";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -182,7 +182,7 @@ public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber){
 	ArrayList<Music> listMusic = new ArrayList<Music>();
 	 try {
 			String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id order by song_popularity DESC limit "+TransmittedNumber+",15";
-			dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+			dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){

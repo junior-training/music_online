@@ -33,9 +33,9 @@ public class DisplayMoreSongsServlet extends HttpServlet {
 		IMusicService aMusicService = new MusicServiceImpl();
 		ArrayList<Music> moreSongs;
 		int transmittedNumber;
-		String typeChinese;
-		StringBuffer moreSongsStrbuf;
-		String moreSongsStr;
+		String typeChinese = null;
+		StringBuffer moreSongsStrbuf = new StringBuffer();
+		String moreSongsStr = null;
 		
 		String type = request.getParameter("type");
 		String indexStr = request.getParameter("index");

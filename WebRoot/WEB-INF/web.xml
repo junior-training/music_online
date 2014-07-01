@@ -23,6 +23,13 @@
     <servlet-name>DisplayMoreSongsServlet</servlet-name>
     <servlet-class>com.music_online.actions.DisplayMoreSongsServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>search music by search key</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AccurateSearchServlet</servlet-name>
+    <servlet-class>com.music_online.actions.AccurateSearchServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -37,6 +44,10 @@
   <servlet-mapping>
     <servlet-name>DisplayMoreSongsServlet</servlet-name>
     <url-pattern>/displayMoreSongs</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AccurateSearchServlet</servlet-name>
+    <url-pattern>/accurateSearch</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
