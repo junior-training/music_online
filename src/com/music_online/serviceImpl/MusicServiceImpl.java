@@ -35,6 +35,12 @@ public class MusicServiceImpl implements IMusicService {
 		
 	}
 
+	public ArrayList<Music> accurateSearch(ArrayList searchKeyList) {
+
+		MusicDao md=new MusicDao();
+		return md.accurateSearch(searchKeyList);
+	}
+
 	
 
 }
