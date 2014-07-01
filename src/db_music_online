@@ -1,0 +1,113 @@
+CREATE DATABASE  IF NOT EXISTS `db_music_online` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `db_music_online`;
+-- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
+--
+-- Host: localhost    Database: db_music_online
+-- ------------------------------------------------------
+-- Server version	5.6.13
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `tb_music`
+--
+
+DROP TABLE IF EXISTS `tb_music`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_music` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标识歌曲唯一的id',
+  `song_name` varchar(100) DEFAULT NULL COMMENT '歌曲名称',
+  `singer_name` varchar(100) DEFAULT NULL COMMENT '歌手名称',
+  `album_name` varchar(100) DEFAULT NULL COMMENT '专辑名称',
+  `song_format` varchar(100) DEFAULT NULL COMMENT '歌曲格式，即后缀名',
+  `song_addr` varchar(100) DEFAULT NULL COMMENT '歌曲地址',
+  `image_addr` varchar(100) DEFAULT NULL COMMENT '播放时使用的图片地址，如专辑地址或一张歌手的图片 ',
+  `lyric_addr` varchar(100) DEFAULT NULL COMMENT '歌词地址 ',
+  `song_genre` varchar(100) DEFAULT NULL COMMENT '歌曲曲风，如华语，欧美与日韩',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COMMENT='存储歌曲的基本元素信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_music`
+--
+
+LOCK TABLES `tb_music` WRITE;
+/*!40000 ALTER TABLE `tb_music` DISABLE KEYS */;
+INSERT INTO `tb_music` VALUES (61,'A Little Love','冯曦妤','A Little Love','mp3','song_files/A Little Love - 冯曦妤.mp3','image_files/A Little Love - 冯曦妤.mp3','lrc_files/A Little Love - 冯曦妤.lrc','华语'),(62,'A Public Affair','Jessica Simpson','A Public Affair','mp3','song_files/A Public Affair - Jessica Simpson.mp3','image_files/A Public Affair - Jessica Simpson.mp3','lrc_files/A Public Affair - Jessica Simpson.lrc','欧美'),(63,'A Simple Life','Brian Crain','A Simple Life','mp3','song_files/A Simple Life - Brian Crain.mp3','image_files/A Simple Life - Brian Crain.mp3','lrc_files/A Simple Life - Brian Crain.lrc','日韩'),(64,'A Thousand Miles','Vanessa Carlton','Be Not Nobody','mp3','song_files/A Thousand Miles - Vanessa Carlton.mp3','image_files/Be Not Nobody - Vanessa Carlton.mp3','lrc_files/A Thousand Miles - Vanessa Carlton.lrc','欧美'),(65,'A.I.N.Y. (爱你)','G.E.M.邓紫棋','18...','mp3','song_files/A.I.N.Y. (爱你) - G.E.M.邓紫棋.mp3','image_files/18... - G.E.M.邓紫棋.mp3','lrc_files/A.I.N.Y. (爱你) - G.E.M.邓紫棋.lrc','华语'),(66,'Annabelle','Pianoboy','Annabelle','mp3','song_files/Annabelle - Pianoboy.mp3','image_files/Annabelle - Pianoboy.mp3','lrc_files/Annabelle - Pianoboy.lrc','日韩'),(67,'Ayur - I Miss You','DJ Vital Force','Modal \'Eternally','mp3','song_files/Ayur - I Miss You - DJ Vital Force.mp3','image_files/Modal \'Eternally - DJ Vital Force.mp3','lrc_files/Ayur - I Miss You - DJ Vital Force.lrc','日韩'),(68,'Breathless','Shayne Ward','Breathless','mp3','song_files/Breathless - Shayne Ward.mp3','image_files/Breathless - Shayne Ward.mp3','lrc_files/Breathless - Shayne Ward.lrc','欧美'),(69,'Clubbed To Death (Kurayamino Mix)','Rob Dougan','The Matrix: Music From The Motion Picture','mp3','song_files/Clubbed To Death (Kurayamino Mix) - Rob Dougan.mp3','image_files/The Matrix: Music From The Motion Picture - Rob Dougan.mp3','lrc_files/Clubbed To Death (Kurayamino Mix) - Rob Dougan.lrc','欧美'),(70,'Faraway','Apocalyptica','Reflections','mp3','song_files/Faraway - Apocalyptica.mp3','image_files/Reflections - Apocalyptica.mp3','lrc_files/Faraway - Apocalyptica.lrc','日韩'),(71,'feel the moon','陈敏','月亮心','mp3','song_files/feel the moon - 陈敏.mp3','image_files/月亮心 - 陈敏.mp3','lrc_files/feel the moon - 陈敏.lrc','华语'),(72,'Gentleman','刘伟德 , 戴爱玲','爱情公寓4原声大碟','mp3','song_files/Gentleman - 刘伟德 , 戴爱玲.mp3','image_files/爱情公寓4原声大碟 - 刘伟德 , 戴爱玲.mp3','lrc_files/Gentleman - 刘伟德 , 戴爱玲.lrc','华语'),(73,'Here\'s to Never Growing Up','Avril Lavigne','Here\'s to Never Growing up','mp3','song_files/Here\'s to Never Growing Up - Avril Lavigne.mp3','image_files/Here\'s to Never Growing up - Avril Lavigne.mp3','lrc_files/Here\'s to Never Growing Up - Avril Lavigne.lrc','欧美'),(74,'I Love You Forever','Jewel','Sweet and Wild','mp3','song_files/I Love You Forever - Jewel.mp3','image_files/Sweet and Wild - Jewel.mp3','lrc_files/I Love You Forever - Jewel.lrc','欧美'),(75,'Intro.','Otokaze','OTOKAZE','mp3','song_files/Intro. - Otokaze.mp3','image_files/OTOKAZE - Otokaze.mp3','lrc_files/Intro. - Otokaze.lrc','日韩'),(76,'Kirara～piano','S.E.N.S.','Wish ～神様、もう少しだけ オリジナルサウンドトラック','mp3','song_files/Kirara～piano - S.E.N.S..mp3','image_files/Wish ～神様、もう少しだけ オリジナルサウンドトラック - S.E.N.S..mp3','lrc_files/Kirara～piano - S.E.N.S..lrc','日韩'),(77,'MATSURI','吉田潔','打','mp3','song_files/MATSURI - 吉田潔.mp3','image_files/打 - 吉田潔.mp3','lrc_files/MATSURI - 吉田潔.lrc','日韩'),(78,'Memory of December','Otokaze','Sound of North','mp3','song_files/Memory of December - Otokaze.mp3','image_files/Sound of North - Otokaze.mp3','lrc_files/Memory of December - Otokaze.lrc','日韩'),(79,'Sakura Memory Pt2-夜桜','Otokaze','OTOKAZE','mp3','song_files/Sakura Memory Pt2-夜桜 - Otokaze.mp3','image_files/OTOKAZE - Otokaze.mp3','lrc_files/Sakura Memory Pt2-夜桜 - Otokaze.lrc','日韩'),(80,'secret base ~君がくれたもの~ (10 years after Ver.)','茅野愛衣 , 戸松遥 , 早見沙織','secret base～君がくれたもの～','mp3','song_files/secret base ~君がくれたもの~ (10 years after Ver.) - 茅野愛衣 , 戸松遥 , 早見沙織.mp3','image_files/secret base～君がくれたもの～ - 茅野愛衣 , 戸松遥 , 早見沙織.mp3','lrc_files/secret base ~君がくれたもの~ (10 years after Ver.) - 茅野愛衣 , 戸松遥 , 早見沙織.lrc','日韩'),(81,'Sis puella magica!','梶浦由記','魔法少女まどか☆マギカ MUSIC COLLECTION','mp3','song_files/Sis puella magica! - 梶浦由記.mp3','image_files/魔法少女まどか☆マギカ MUSIC COLLECTION - 梶浦由記.mp3','lrc_files/Sis puella magica! - 梶浦由記.lrc','日韩'),(82,'Snow Campus','Otokaze','WINTER BEATS COLLECTION','mp3','song_files/Snow Campus - Otokaze.mp3','image_files/WINTER BEATS COLLECTION - Otokaze.mp3','lrc_files/Snow Campus - Otokaze.lrc','日韩'),(83,'So-Lo','Kate Havnevik','Melankton','mp3','song_files/So-Lo - Kate Havnevik.mp3','image_files/Melankton - Kate Havnevik.mp3','lrc_files/So-Lo - Kate Havnevik.lrc','欧美'),(84,'Sorry','Sibel','The Diving Belle','mp3','song_files/Sorry - Sibel.mp3','image_files/The Diving Belle - Sibel.mp3','lrc_files/Sorry - Sibel.lrc','欧美'),(85,'Stay Here Forever','Jewel','Sweet and Wild','mp3','song_files/Stay Here Forever - Jewel.mp3','image_files/Sweet and Wild - Jewel.mp3','lrc_files/Stay Here Forever - Jewel.lrc','欧美'),(86,'the Beautiful World','前田愛','キノの旅-the Beautiful World- -記憶の国 Their Memories-','mp3','song_files/the Beautiful World - 前田愛.mp3','image_files/キノの旅-the Beautiful World- -記憶の国 Their Memories- - 前田愛.mp3','lrc_files/the Beautiful World - 前田愛.lrc','日韩'),(88,'The Truth That You Leave','Pianoboy','A Best','mp3','song_files/The Truth That You Leave - Pianoboy.mp3','image_files/A Best - Pianoboy.mp3','lrc_files/The Truth That You Leave - Pianoboy.lrc','华语'),(89,'Tomorrow','Avril Lavigne','Let Go','mp3','song_files/Tomorrow - Avril Lavigne.mp3','image_files/Let Go - Avril Lavigne.mp3','lrc_files/Tomorrow - Avril Lavigne.lrc','欧美'),(90,'TV Ending Theme','吉田潔','NHKスペシャル「日本人はるかな旅」オリジナル?サウンドトラック','mp3','song_files/TV Ending Theme - 吉田潔.mp3','image_files/NHKスペシャル「日本人はるかな旅」オリジナル?サウンドトラック - 吉田潔.mp3','lrc_files/TV Ending Theme - 吉田潔.lrc','日韩'),(91,'きみが呼ぶ名まえ~夏目友人帳のテーマ','吉森信','夏目友人帳 音楽集 おとのけの捧げもの','mp3','song_files/きみが呼ぶ名まえ~夏目友人帳のテーマ - 吉森信.mp3','image_files/夏目友人帳 音楽集 おとのけの捧げもの - 吉森信.mp3','lrc_files/きみが呼ぶ名まえ~夏目友人帳のテーマ - 吉森信.lrc','日韩'),(92,'くりかえす (「パッヘルベルのカノン」より)','日本ACG','キノの旅-the Beautiful World- -記憶の国 Their Memories-','mp3','song_files/くりかえす (「パッヘルベルのカノン」より) - 日本ACG.mp3','image_files/キノの旅-the Beautiful World- -記憶の国 Their Memories- - 日本ACG.mp3','lrc_files/くりかえす (「パッヘルベルのカノン」より) - 日本ACG.lrc','日韩'),(93,'めざせポケモンマスター','松本梨香','めざせポケモンマスター/ひゃくごじゅういち','mp3','song_files/めざせポケモンマスター - 松本梨香.mp3','image_files/めざせポケモンマスター/ひゃくごじゅういち - 松本梨香.mp3','lrc_files/めざせポケモンマスター - 松本梨香.lrc','日韩'),(94,'クラゲ、流れ星','大塚愛','クラゲ、流れ星','mp3','song_files/クラゲ、流れ星 - 大塚愛.mp3','image_files/クラゲ、流れ星 - 大塚愛.mp3','lrc_files/クラゲ、流れ星 - 大塚愛.lrc','日韩'),(95,'テルーの唄(歌集バージョン)','手嶌葵','ゲド戦記歌集','mp3','song_files/テルーの唄(歌集バージョン) - 手嶌葵.mp3','image_files/ゲド戦記歌集 - 手嶌葵.mp3','lrc_files/テルーの唄(歌集バージョン) - 手嶌葵.lrc','日韩'),(96,'人々','日本ACG','キノの旅-the Beautiful World- -記憶の国 Their Memories-','mp3','song_files/人々 - 日本ACG.mp3','image_files/キノの旅-the Beautiful World- -記憶の国 Their Memories- - 日本ACG.mp3','lrc_files/人々 - 日本ACG.lrc','日韩'),(97,'冰菊物语','群星','夜宴.情筝','mp3','song_files/冰菊物语 - 群星.mp3','image_files/夜宴.情筝 - 群星.mp3','lrc_files/冰菊物语 - 群星.lrc','华语'),(98,'和夏-waka','Otokaze','OTOKAZE','mp3','song_files/和夏-waka - Otokaze.mp3','image_files/OTOKAZE - Otokaze.mp3','lrc_files/和夏-waka - Otokaze.lrc','日韩'),(99,'在世上唯一的花朵','女子十二乐坊','The Best of','mp3','song_files/在世上唯一的花朵 - 女子十二乐坊.mp3','image_files/The Best of - 女子十二乐坊.mp3','lrc_files/在世上唯一的花朵 - 女子十二乐坊.lrc','华语'),(100,'夏恋','Otokaze','夏恋','mp3','song_files/夏恋 - Otokaze.mp3','image_files/夏恋 - Otokaze.mp3','lrc_files/夏恋 - Otokaze.lrc','日韩'),(101,'巴赫-A小调小提琴协奏曲','女子十二乐坊','上海','mp3','song_files/巴赫-A小调小提琴协奏曲 - 女子十二乐坊.mp3','image_files/上海 - 女子十二乐坊.mp3','lrc_files/巴赫-A小调小提琴协奏曲 - 女子十二乐坊.lrc','华语'),(102,'当我唱起这首歌','小贱','我是小贱','mp3','song_files/当我唱起这首歌 - 小贱.mp3','image_files/我是小贱 - 小贱.mp3','lrc_files/当我唱起这首歌 - 小贱.lrc','华语'),(103,'彩月-Saigetsu 2012','Otokaze','OTOKAZE','mp3','song_files/彩月-Saigetsu 2012 - Otokaze.mp3','image_files/OTOKAZE - Otokaze.mp3','lrc_files/彩月-Saigetsu 2012 - Otokaze.lrc','日韩'),(104,'我好想你','苏打绿','秋：故事','mp3','song_files/我好想你 - 苏打绿.mp3','image_files/秋：故事 - 苏打绿.mp3','lrc_files/我好想你 - 苏打绿.lrc','华语'),(105,'我的主题曲','江语晨','晴天娃娃','mp3','song_files/我的主题曲 - 江语晨.mp3','image_files/晴天娃娃 - 江语晨.mp3','lrc_files/我的主题曲 - 江语晨.lrc','华语'),(106,'最长的电影','周杰伦','我很忙','mp3','song_files/最长的电影 - 周杰伦.mp3','image_files/我很忙 - 周杰伦.mp3','lrc_files/最长的电影 - 周杰伦.lrc','华语'),(107,'樱花草','Sweety','花言乔语','mp3','song_files/樱花草 - Sweety.mp3','image_files/花言乔语 - Sweety.mp3','lrc_files/樱花草 - Sweety.lrc','华语'),(108,'町, 時の流れ, 人','Key Sounds Label','CLANNAD Original SoundTrack','mp3','song_files/町, 時の流れ, 人 - Key Sounds Label.mp3','image_files/CLANNAD Original SoundTrack - Key Sounds Label.mp3','lrc_files/町, 時の流れ, 人 - Key Sounds Label.lrc','日韩'),(109,'百鬼夜行抄','森英治','百鬼夜行抄 o.s.t','mp3','song_files/百鬼夜行抄 - 森英治.mp3','image_files/百鬼夜行抄 o.s.t - 森英治.mp3','lrc_files/百鬼夜行抄 - 森英治.lrc','日韩'),(110,'盛唐乐坊','女子十二乐坊','敦煌','mp3','song_files/盛唐乐坊 - 女子十二乐坊.mp3','image_files/敦煌 - 女子十二乐坊.mp3','lrc_files/盛唐乐坊 - 女子十二乐坊.lrc','华语'),(111,'祭り','日本ACG','キノの旅-the Beautiful World- -記憶の国 Their Memories-','mp3','song_files/祭り - 日本ACG.mp3','image_files/キノの旅-the Beautiful World- -記憶の国 Their Memories- - 日本ACG.mp3','lrc_files/祭り - 日本ACG.lrc','日韩'),(112,'答案','杨坤 , 郭采洁','答案','mp3','song_files/答案 - 杨坤 , 郭采洁.mp3','image_files/答案 - 杨坤 , 郭采洁.mp3','lrc_files/答案 - 杨坤 , 郭采洁.lrc','华语'),(113,'雨爱','杨丞琳','Rainie & Love 雨爱','mp3','song_files/雨爱 - 杨丞琳.mp3','image_files/Rainie & Love 雨爱 - 杨丞琳.mp3','lrc_files/雨爱 - 杨丞琳.lrc','华语'),(114,'雨道-insturmental','Otokaze','OTAKAZE','mp3','song_files/雨道-insturmental - Otokaze.mp3','image_files/OTAKAZE - Otokaze.mp3','lrc_files/雨道-insturmental - Otokaze.lrc','日韩');
+/*!40000 ALTER TABLE `tb_music` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_music_intro`
+--
+
+DROP TABLE IF EXISTS `tb_music_intro`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_music_intro` (
+  `id` int(11) NOT NULL,
+  `song_intro_addr` varchar(45) DEFAULT NULL,
+  `singer_intro_addr` varchar(45) DEFAULT NULL,
+  `album_intro_addr` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `music2intro` FOREIGN KEY (`id`) REFERENCES `tb_music` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='存储一首歌曲相关的歌手，专辑，歌曲信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_music_intro`
+--
+
+LOCK TABLES `tb_music_intro` WRITE;
+/*!40000 ALTER TABLE `tb_music_intro` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_music_intro` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_popularity`
+--
+
+DROP TABLE IF EXISTS `tb_popularity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_popularity` (
+  `id` int(11) NOT NULL,
+  `audition_time` int(11) DEFAULT NULL,
+  `download_time` int(11) DEFAULT NULL,
+  `song_popularity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `music2popularity` FOREIGN KEY (`id`) REFERENCES `tb_music` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='存储对于歌曲流行度的相关计算数据 ';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_popularity`
+--
+
+LOCK TABLES `tb_popularity` WRITE;
+/*!40000 ALTER TABLE `tb_popularity` DISABLE KEYS */;
+INSERT INTO `tb_popularity` VALUES (61,0,12,10),(62,0,0,9),(63,0,0,8),(64,0,0,7),(65,0,0,6),(66,0,0,5),(67,0,0,4),(68,0,0,3),(69,0,0,2),(70,0,0,1),(71,0,0,0),(72,NULL,NULL,90),(73,NULL,NULL,89),(74,NULL,NULL,88),(75,NULL,NULL,87),(76,NULL,NULL,86),(77,NULL,NULL,85),(78,NULL,NULL,84),(79,NULL,NULL,83),(80,NULL,NULL,82),(81,NULL,NULL,81),(82,NULL,NULL,80),(83,NULL,NULL,79),(84,NULL,NULL,78),(85,NULL,NULL,77),(86,NULL,NULL,76),(88,NULL,NULL,74),(89,NULL,NULL,73),(90,NULL,NULL,72),(91,NULL,NULL,71),(92,NULL,NULL,70),(93,NULL,NULL,69),(94,NULL,NULL,68),(95,NULL,NULL,67),(96,NULL,NULL,66),(97,NULL,NULL,65),(98,NULL,NULL,64),(99,NULL,NULL,63),(100,NULL,NULL,62),(101,NULL,NULL,61),(102,NULL,NULL,60),(103,NULL,NULL,59),(104,NULL,NULL,58),(105,NULL,NULL,57),(106,NULL,NULL,56),(107,NULL,NULL,55),(108,NULL,NULL,54),(109,NULL,NULL,53),(110,NULL,NULL,52),(111,NULL,NULL,51),(112,NULL,NULL,50),(113,NULL,NULL,49),(114,NULL,NULL,0);
+/*!40000 ALTER TABLE `tb_popularity` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-07-01  9:37:25

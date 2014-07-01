@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name></display-name>
+  <servlet>
+    <description>music search servlet:receive request,handle,return response</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>MusicSearchServlet</servlet-name>
+    <servlet-class>com.music_online.actions.MusicSearchServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>display Top10 songs of every type when init</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DisplayTop10SongsServlet</servlet-name>
+    <servlet-class>com.music_online.actions.DisplayTop10SongsServlet</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>MusicSearchServlet</servlet-name>
+    <url-pattern>/music_search</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DisplayTop10SongsServlet</servlet-name>
+    <url-pattern>/displayTop10Songs</url-pattern>
+  </servlet-mapping>	
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>

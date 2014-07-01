@@ -1,0 +1,24 @@
+# directories
+.myeclipse/
+.settings/
+WebRoot/image_files/
+WebRoot/lrc_files/
+WebRoot/music_intro_files/
+WebRoot/song_files/
+WebRoot/WEB-INF/classes/
+WebRoot/WEB-INF/lib/
+WebRoot/resource/
+
+
+# files
+.classpath
+.mymetadata
+.mystrutsdata
+.project
+
+# file types
+*.jar
+*.class
+*.tld
+*.mex
+
