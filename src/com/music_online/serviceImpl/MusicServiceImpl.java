@@ -1,7 +1,7 @@
 package com.music_online.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import com.music_online.dao.MusicDao;
 import com.music_online.pojo.Music;
@@ -20,5 +20,21 @@ public class MusicServiceImpl implements IMusicService {
         MusicDao md=new MusicDao();
 		return md.getTop10SongsOfRank();
 	}
+
+	public ArrayList<Music> getMoreSongsOf3Genres(String song_genre,
+			int TransmittedNumber) {
+		
+		MusicDao md=new MusicDao();
+		return md.getMoreSongsOf3Genres(song_genre, TransmittedNumber);
+	}
+
+	public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber) {
+		
+		MusicDao md=new MusicDao();
+		return md.getMoreSongsOfRank(TransmittedNumber);
+		
+	}
+
+	
 
 }
