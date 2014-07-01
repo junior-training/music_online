@@ -274,6 +274,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
     
     Player.prototype.mkTypeList = function (listType) {
         var container = $('.t-'+listType+' .t-list'),
+            self = this,
             tempList = [],
             d = this.musicData[listType],
             listStr = '';
