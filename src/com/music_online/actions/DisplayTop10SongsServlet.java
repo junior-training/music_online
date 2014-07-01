@@ -114,12 +114,19 @@ public class DisplayTop10SongsServlet extends HttpServlet {
         
         //将组装好的JSON字符串发给前台
 		String searchResult = "{\"chinese\":[{\"id\":\"1\",\"title\":\"一眼万年\",\"artist\":\"S.H.E\",\"album\":\"《天外飞仙》主题曲\"," +
-		"\"src\":\"http://localhost:8080/music_online/WebRoot/song_files/一眼万年-SHE.mp3\"," +
-		"\"img\":\"http://localhost:8080/music_online/WebRoot/image_files/天外飞仙主题曲-SHE.png\"}]}";
+		"\"src\":\"http://localhost:8080/music_online/WebRoot/resource/song_files/半岛铁盒 - 周杰伦.mp3\"," +
+		"\"img\":\"http://localhost:8080/music_online/WebRoot/resource/image_files/八度空间 - 周杰伦.png\"}],"+"\"western\":[{\"id\":\"1\",\"title\":\"一眼万年\",\"artist\":\"S.H.E\",\"album\":\"《天外飞仙》主题曲\"," +
+		"\"src\":\"http://localhost:8080/music_online/WebRoot/resource/song_files/半岛铁盒 - 周杰伦.mp3\"," +
+		"\"img\":\"http://localhost:8080/music_online/WebRoot/resource/image_files/八度空间 - 周杰伦.png\"}],"+"\"jk\":[{\"id\":\"1\",\"title\":\"一眼万年\",\"artist\":\"S.H.E\",\"album\":\"《天外飞仙》主题曲\"," +
+		"\"src\":\"http://localhost:8080/music_online/WebRoot/resource/song_files/半岛铁盒 - 周杰伦.mp3\"," +
+		"\"img\":\"http://localhost:8080/music_online/WebRoot/resource/image_files/八度空间 - 周杰伦.png\"}],"+"\"rank\":[{\"id\":\"1\",\"title\":\"一眼万年\",\"artist\":\"S.H.E\",\"album\":\"《天外飞仙》主题曲\"," +
+		"\"src\":\"http://localhost:8080/music_online/WebRoot/resource/song_files/半岛铁盒 - 周杰伦.mp3\"," +
+		"\"img\":\"http://localhost:8080/music_online/WebRoot/resource/image_files/八度空间 - 周杰伦.png\"}]}";
+		
         response.setCharacterEncoding("utf-8");
         response.setHeader("Cache-Control", "no-cache");
 		response.getWriter().write(top10SongsOfAllTypesStr);
-        
+        //response.getWriter().write(searchResult);
         
 	}
 

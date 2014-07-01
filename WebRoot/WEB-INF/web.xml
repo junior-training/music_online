@@ -17,6 +17,13 @@
     <servlet-name>DisplayTop10SongsServlet</servlet-name>
     <servlet-class>com.music_online.actions.DisplayTop10SongsServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>display more songs of one type</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DisplayMoreSongsServlet</servlet-name>
+    <servlet-class>com.music_online.actions.DisplayMoreSongsServlet</servlet-class>
+  </servlet>
+
 
 
   <servlet-mapping>
@@ -26,6 +33,10 @@
   <servlet-mapping>
     <servlet-name>DisplayTop10SongsServlet</servlet-name>
     <url-pattern>/displayTop10Songs</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DisplayMoreSongsServlet</servlet-name>
+    <url-pattern>/displayMoreSongs</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
