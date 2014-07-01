@@ -118,7 +118,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         
         new IO({
             type:"get",
-            url: 'music-data.js',
+            url: 'displayTop10Songs',
             success: function(data){
                 self.musicData = data;
                 self.initTeyeWrap(data);
