@@ -212,7 +212,7 @@ public ArrayList<Music> accurateSearch(ArrayList searchKeyList){
 	
 	ArrayList<Music> listMusic = new ArrayList<Music>();
 	 try {  
-		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		    String sql;
 		    for(int i=0;i<searchKeyList.size();i++){
 		    sql="select distinct * from tb_music where song_name like '%"+searchKeyList.get(i)+"%'" +

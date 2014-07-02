@@ -29,6 +29,13 @@
     <servlet-name>AccurateSearchServlet</servlet-name>
     <servlet-class>com.music_online.actions.AccurateSearchServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>fuzzy search by search key</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>FuzzySearchServlet</servlet-name>
+    <servlet-class>com.music_online.actions.FuzzySearchServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -48,6 +55,10 @@
   <servlet-mapping>
     <servlet-name>AccurateSearchServlet</servlet-name>
     <url-pattern>/accurateSearch</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FuzzySearchServlet</servlet-name>
+    <url-pattern>/fuzzySearch</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
