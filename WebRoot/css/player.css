@@ -448,6 +448,7 @@ a {
     width: 660px;
     padding: 20px;
     margin: 0 auto;
+    overflow: auto;
     background-color: #666;
     z-index: 190;
     -webkit-transform-origin: 0 0;
@@ -470,9 +471,10 @@ a {
     color: #666;
 }
 .default-info {
-    display: none;
+/*    display: none;*/
 }
 .lrc-text {
+    display: none;
     -webkit-transition: transform 0.1s ease;
     -o-transition: transform 0.1s ease;
     transition: transform 0.1s ease;
@@ -500,4 +502,38 @@ a {
     background-color: #FFF;
     color: #666;
     visibility: hidden;
+}
+
+.text-body {
+}
+
+.time-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    z-index: 200;
+    border-radius: 5px;
+    display: none;
+}
+
+.volIcon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+/*    background-color: #000;*/
+    right: 70px;
+    bottom: 50px;
+    background-image: url(../resource/img/player.png);
+    background-position: -195px -135px;
+    
+}
+.volIcon:hover{
+
 }

@@ -35,14 +35,14 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             audioSrc = '';
             animImgSrc = this.defaltImg;
         } else {
-            $($('.p-info a')[0]).html(this.mList[this.currentPlay].title);
-            $($('.p-info a')[1]).html(this.mList[this.currentPlay].artist);
-            $($('.p-info a')[2]).html(this.mList[this.currentPlay].album);
+            $($('.p-info a')[0]).text(this.mList[this.currentPlay].title);
+            $($('.p-info a')[1]).text(this.mList[this.currentPlay].artist);
+            $($('.p-info a')[2]).text(this.mList[this.currentPlay].album);
             audioSrc = this.mList[this.currentPlay].src;
             animImgSrc = this.mList[this.currentPlay].img;
         }
         $(this.audio).attr('src', audioSrc);
-//        this.initTeyeWrap();
+        //        this.initTeyeWrap();
         this.searchHandler();
         this.initPanel();
         this.animImg.css('background-image', 'url("' + animImgSrc + '")');
@@ -55,7 +55,9 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             typeWrap = $('.type-wrap'),
             typeShown = false;
         var handler = $('.handler'),
-            handPos = 0;
+            handPos = 0,
+            gutter = $('.gutter'),
+            timeInfo = $('.time-info');
 
         showListBtn.on('click', function () {
             if (listShown) {
@@ -63,14 +65,14 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                 $(this).css({
                     width: '40px',
                     border: 'none'
-                }).html('&gt');
+                }).text('>');
                 listShown = false;
             } else {
                 musicListEl.css('transform', 'translate3d(300px,0,0)');
                 $(this).css({
                     width: '200px',
                     border: '1px solid'
-                }).html('&lt 正在播放');
+                }).text('< 正在播放');
                 listShown = true;
             };
         });
@@ -81,25 +83,29 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                 $(this).css({
                     width: '40px',
                     border: 'none'
-                }).html('&lt');
+                }).text('<');
                 typeShown = false;
             } else {
                 typeWrap.css('transform', 'translate3d(-300px, 0, 0)');
                 $(this).css({
                     width: '200px',
                     border: '1px solid'
-                }).html('到处看看 &gt');
+                }).text('到处看看 >');
                 typeShown = true;
             };
         });
 
         $(self.audio).on('timeupdate', function () {
-            var i = 2;
+            var i = 2,
+                cm = Math.floor(this.currentTime/60), cs = Math.floor(this.currentTime%60), 
+                dm = Math.floor(this.duration/60), ds = Math.floor(this.duration%60);
 
             handPos = this.currentTime / this.duration * 100;
             handler.css('left', handPos - 1 + '%');
             if (this.ended)
                 self.playOther(self.currentPlay + 1);
+            
+            $('.time-info').text(cm+':'+cs+'/'+dm+':'+ds);
 
             if (this.currentTime < self.lrc[2].timeline)
                 return;
@@ -114,21 +120,44 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             
         });
 
+
+        gutter.on('mouseenter', function (ev) {
+            timeInfo.css({
+                top: ev.pageY+10,
+                left: ev.pageX+10,
+                display: 'block'
+            });
+            gutter.on('mousemove', function (ev) {
+                timeInfo.css({
+                    top: ev.pageY+10,
+                    left: ev.pageX+10
+                });
+                ev.halt();
+            });
+        });
+        gutter.on('mouseleave', function (ev) {
+            timeInfo.css({
+                display: 'none'
+            });
+            gutter.detach('mousemove');
+        });
+
         this.handleDetail();
-        
+
         new IO({
-            type:"get",
-            url: 'displayTop10Songs',
-            success: function(data){
+            type: "get",
+//            url: "music-data.js",
+            url: "displayTop10Songs",
+            success: function (data) {
                 self.musicData = data;
                 self.initTeyeWrap(data);
             },
-            error: function(m, io){
+            error: function (m, io) {
                 console.log(m);
             },
             dataType: "json"
         });
-        
+
         this.makeLrc();
     };
 
@@ -260,9 +289,9 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         $(this.audio).on('progress', function () {});
         this.audio.play();
 
-        $($('.p-info a')[0]).html(this.mList[this.currentPlay].title);
-        $($('.p-info a')[1]).html(this.mList[this.currentPlay].artist);
-        $($('.p-info a')[2]).html(this.mList[this.currentPlay].album);
+        $($('.p-info a')[0]).text(this.mList[this.currentPlay].title);
+        $($('.p-info a')[1]).text(this.mList[this.currentPlay].artist);
+        $($('.p-info a')[2]).text(this.mList[this.currentPlay].album);
 
         if (this.animCD.isPaused())
             this.animCD.resume();
@@ -271,14 +300,14 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         this.animImg.css('background-image', 'url("' + this.mList[this.currentPlay].img + '")');
     }
-    
+
     Player.prototype.mkTypeList = function (listType) {
-        var container = $('.t-'+listType+' .t-list'),
+        var container = $('.t-' + listType + ' .t-list'),
             self = this,
             tempList = [],
             d = this.musicData[listType],
             listStr = '';
-        
+
         for (var i = 0; i < d.length; i++) {
             tempList.push(new XTemplate(TypeTpl).render(d[i]));
         };
@@ -287,21 +316,21 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         container.delegate('click', '.t-list .add-plist', function (ev) {
             var t = $(ev.currentTarget);
-            self.addToPlaylist('chinese', t.parent().parent().index());
+            self.addToPlaylist(listType, t.parent().parent().index());
             ev.halt();
         });
         container.delegate('click', '.t-list .play-now', function (ev) {
             var t = $(ev.currentTarget);
-            self.addToPlaylist('chinese', t.parent().parent().index());
+            self.addToPlaylist(listType, t.parent().parent().index());
             self.playOther(self.mList.length - 1);
             $('.toggle').css('background-position', '-264px -3px');
             ev.halt();
         });
-        container.delegate('click', '.t-singer', function(ev){
+        container.delegate('click', '.t-singer', function (ev) {
             $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
             ev.halt();
         });
-        container.delegate('click', '.t-song', function(ev){
+        container.delegate('click', '.t-song', function (ev) {
             $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
             ev.halt();
         });
@@ -320,7 +349,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         this.mkTypeList('western');
         this.mkTypeList('jk');
         this.mkTypeList('rank');
-        
+
         $(typePage[current - 1]).css({
             'opacity': 1,
             'z-index': 150
@@ -388,21 +417,22 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                 isAnimating = true;
             }
         });
-        
-        $('.t-chinese .more').on('click', function(){
+
+        $('.t-chinese .more').on('click', function () {
             new IO({
-                type:"get",
+                type: "get",
+//                url: 'get-more.js',
                 url: 'displayMoreSongs',
                 data: {
                     type: "chinese",
                     index: "1"
                 },
-                success: function(data){
+                success: function (data) {
                     $('.t-chinese .t-list li').remove();
                     self.musicData.chinese = data;
                     self.mkTypeList('chinese');
                 },
-                error: function(m, io){
+                error: function (m, io) {
                     console.log(m);
                 },
                 dataType: "json"
@@ -414,24 +444,24 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
     Player.prototype.makeLrc = function () {
         var self = this;
         new IO({
-            type:"get",
+            type: "get",
             url: 'lyric-data.js',
             dataType: "json",
-            success:function(data){
+            success: function (data) {
                 var elStr = '';
                 self.lrc = data;
-                for(var i = 0; i < self.lrc.length; i++){
-                    elStr += '<p class="line" data-index = "'+i+'">'+self.lrc[i].text+'</p>'
+                for (var i = 0; i < self.lrc.length; i++) {
+                    elStr += '<p class="line" data-index = "' + i + '">' + self.lrc[i].text + '</p>'
                 }
                 $('.lyric .lrc-text').append(elStr);
             },
-            error: function(m, io){
+            error: function (m, io) {
                 console.log(m);
             }
         })
-        
+
     }
-    
+
     Player.prototype.addToPlaylist = function (type, index) {
         var data = this.musicData[type][index];
         this.mList.push(data);
@@ -445,7 +475,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             searchInput = $('.search-bar>input'),
             searchBtn = $('.search-bar>button'),
             hint = $('.search-hint'),
-            detail = $('.detail-info');
+            textBody = $('.text-body');
 
         searchInput.on('focusin', function () {
             searchBar.css('box-shadow', '0 0 6px');
@@ -456,35 +486,45 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         });
         searchInput.on('valuechange', function (ev) {
             hint.css('visibility', 'visible');
-            console.log(ev.prevVal+','+ev.newVal);
+            console.log(ev.prevVal + ',' + ev.newVal);
         });
         
-        searchBtn.on('click', function(){
+        function searchKeyWord (){
             var key = searchInput.val();
             new IO({
-                type:"get",
-                url: "searchMusic",
+                type: "get",
+//                url: "music-data.js",
+                url: "accurateSearch",
                 data: {
-                    "key":key 
+                    "searchKey": key
                 },
-                success: function(data){
-                    detail.html(data);
+                success: function (data) {
+                    textBody.text(JSON.stringify(data));
+                    $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
                 },
-                error: function(m, io){
+                error: function (m, io) {
                     console.log(m);
                 },
                 dataType: "json"
             });
+        }
+        
+        searchInput.on('keydown', function(ev){
+            if(ev.keyCode === 13){
+                searchKeyWord();
+                ev.halt();
+            }
         });
+        searchBtn.on('click', searchKeyWord);
     }
 
     Player.prototype.handleDetail = function () {
         var mainEl = $('.detail-info');
-        $('.close').on('click', function(){
+        $('.close').on('click', function () {
             mainEl.css('transform', 'translate3D(0, 0, 0)');
         });
     };
-    
+
     return Player;
 }, {
     requires: ['node', 'anim', 'xtemplate', 'io', 'player/tpl/mListItem-xtpl', 'player/tpl/tListItem-xtpl']
