@@ -16,5 +16,7 @@ public interface IMusicService {
 	public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber);
 	
 	public ArrayList<Music> accurateSearch(ArrayList searchKeyList);
+	
+	public ArrayList<String> fuzzySearch(String type,String Str);
 
 }

@@ -34,7 +34,7 @@ public class DisplayMoreSongsServlet extends HttpServlet {
 		ArrayList<Music> moreSongs;
 		int transmittedNumber;
 		String typeChinese;
-		StringBuffer moreSongsStrbuf;
+		StringBuffer moreSongsStrbuf ;
 		String moreSongsStr;
 		
 		String type = request.getParameter("type");

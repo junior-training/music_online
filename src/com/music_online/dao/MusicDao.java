@@ -252,4 +252,32 @@ public ArrayList<Music> accurateSearch(ArrayList searchKeyList){
   return listMusic;
   
   }
+public  ArrayList<String> fuzzySearch(String type,String Str){
+	ArrayList<String> listString = new ArrayList<String>();
+	 try {  
+		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		    String sql;
+		    sql="select "+type+" from tb_music where "+type+"like '%"+Str+"%' limit 5";
+		    pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()){                               
+			   listString.add(rs.getString(type) );
+			}
+		    rs.close();
+		    pstmt.close();  
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				dbconn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+ return listString;
+  }
 }
