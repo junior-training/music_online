@@ -9,7 +9,14 @@ public class Popularity {
 	int downloadTime;
 	
 	int popularityDegree;
-
+	
+	public Popularity(int id, int lt, int dt,int pp){
+		this.id = id;
+		this.listenTime = lt;
+		this.downloadTime=dt;
+		this.popularityDegree=pp;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -41,9 +48,5 @@ public class Popularity {
 	public void setPopularityDegree(int popularityDegree) {
 		this.popularityDegree = popularityDegree;
 	}
-
-	
-	
-	
 
 }

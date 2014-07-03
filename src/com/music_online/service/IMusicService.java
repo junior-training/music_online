@@ -18,5 +18,7 @@ public interface IMusicService {
 	public ArrayList<Music> accurateSearch(ArrayList searchKeyList);
 	
 	public ArrayList<String> fuzzySearch(String type,String Str);
+	
+	public ArrayList<String> getLyricFilePathById(int id );
 
 }

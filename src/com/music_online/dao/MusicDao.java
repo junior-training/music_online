@@ -208,7 +208,7 @@ public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber){
    return listMusic;
  }
 
-public ArrayList<Music> accurateSearch(ArrayList searchKeyList){
+public ArrayList<Music> accurateSearch(ArrayList<String> searchKeyList){
 	
 	ArrayList<Music> listMusic = new ArrayList<Music>();
 	 try {  
@@ -279,5 +279,29 @@ public  ArrayList<String> fuzzySearch(String type,String Str){
 			}
 		}
  return listString;
+  }
+public ArrayList<String> getLyricFilePathById(int id ){
+	
+	ArrayList<String>  listString=new ArrayList<String>();
+	
+	 try {
+		dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		String sql="select lyric_addr from tb_music where id="+id;
+		pstmt = dbconn.prepareStatement(sql);
+		rs=pstmt.executeQuery();
+		while(rs.next()){
+			listString.add(rs.getString("song_addr"));
+		}
+		rs.close();
+		pstmt.close();
+	} catch (ClassNotFoundException e) {
+		
+		e.printStackTrace();
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+	return listString;
+	
   }
 }
