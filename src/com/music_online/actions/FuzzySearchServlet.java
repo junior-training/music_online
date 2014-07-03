@@ -35,13 +35,95 @@ public class FuzzySearchServlet extends HttpServlet {
 		ArrayList<String> singerNameList;
 		ArrayList<String> albumNameList;
 		ArrayList<String> songNameList;
+		int length;
 		
 		StringBuffer searchResultStrbuf = new StringBuffer();
 		String searchResultStr;
 		
 		//获取歌手列表
-		//singerNameList = aMusicService.fuzzySearch("singer_name",searchKey);
-		//searchResultStrbuf.append("{\"歌手\"")
+		singerNameList = aMusicService.fuzzySearch("singer_name",searchKey);
+		searchResultStrbuf.append("{\"歌手\":[");
+		length = singerNameList.size();
+		if(0 == length)
+		{
+			System.out.println("Singer name list is null!");
+			searchResultStrbuf.append("],");
+		}
+		else
+		{
+			int i = 0;
+			String tmp4;
+			while(i < length)
+			{
+				tmp4 = singerNameList.get(i);
+				searchResultStrbuf.append("{\"singerName\":\""+tmp4+"\"}");
+				if((length - 1) != i)
+					searchResultStrbuf.append(",");
+				
+				i++;
+			}
+			searchResultStrbuf.append("],");
+		}
+		
+		//获取专辑列表
+		albumNameList = fuzzySearch("album_name",searchKey);
+		searchResultStrbuf.append("\"专辑\":[");
+		length = albumNameList.size();
+		if(0 == length)
+		{
+			System.out.println("Album name list is null!");
+			searchResultStrbuf.append("],");
+		}
+		else
+		{
+			int i = 0;
+			String tmp4;
+			while(i < length)
+			{
+				tmp4 = albumNameList.get(i);
+				searchResultStrbuf.append("{\"albumName\":\""+tmp4+"\"}");
+				if((length - 1) != i)
+					searchResultStrbuf.append(",");
+				
+				i++;
+			}
+			searchResultStrbuf.append("],");
+		}
+		
+		//获取歌曲列表
+		songNameList = fuzzySearch("song_name",searchKey);
+		searchResultStrbuf.append("\"歌曲\":[");
+		length = songNameList.size();
+		if(0 == length)
+		{
+			System.out.println("Song name list is null!");
+			searchResultStrbuf.append("]");
+		}
+		else
+		{
+			int i = 0;
+			String tmp4;
+			while(i < length)
+			{
+				tmp4 = songNameList.get(i);
+				searchResultStrbuf.append("{\"songName\":\""+tmp4+"\"}");
+				if((length - 1) != i)
+					searchResultStrbuf.append(",");
+				
+				i++;
+			}
+			searchResultStrbuf.append("]");
+		}
+		
+		searchResultStrbuf.append("}");
+		
+		searchResultStr = searchResultStrbuf.toString();
+        System.out.println(searchResultStr);
+		
+		response.setCharacterEncoding("utf-8");
+        response.setHeader("Cache-Control", "no-cache");
+		response.getWriter().write(searchResultStr);
+		
 	}
 
 	/**
