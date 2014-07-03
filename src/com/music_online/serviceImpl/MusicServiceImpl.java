@@ -41,6 +41,16 @@ public class MusicServiceImpl implements IMusicService {
 		return md.accurateSearch(searchKeyList);
 	}
 
+	public ArrayList<String> fuzzySearch(String type, String Str) {
+		
+        MusicDao md=new MusicDao();
+        return md.fuzzySearch(type, Str);
+	}
+
+	public ArrayList<String> getLyricFilePathById(int id) {
 	
+		MusicDao md=new MusicDao();
+		return md.getLyricFilePathById(id);
+	}
 
 }

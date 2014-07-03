@@ -42,7 +42,6 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             animImgSrc = this.mList[this.currentPlay].img;
         }
         $(this.audio).attr('src', audioSrc);
-        //        this.initTeyeWrap();
         this.searchHandler();
         this.initPanel();
         this.animImg.css('background-image', 'url("' + animImgSrc + '")');
@@ -54,11 +53,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             listShown = false,
             typeWrap = $('.type-wrap'),
             typeShown = false;
-        var handler = $('.handler'),
-            handPos = 0,
-            gutter = $('.gutter'),
+        var gutter = $('.gutter'),
             timeInfo = $('.time-info');
-
         showListBtn.on('click', function () {
             if (listShown) {
                 musicListEl.css('transform', 'translate3d(-300px,0,0)');
@@ -95,42 +91,18 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             };
         });
 
-        $(self.audio).on('timeupdate', function () {
-            var i = 2,
-                cm = Math.floor(this.currentTime/60), cs = Math.floor(this.currentTime%60), 
-                dm = Math.floor(this.duration/60), ds = Math.floor(this.duration%60);
-
-            handPos = this.currentTime / this.duration * 100;
-            handler.css('left', handPos - 1 + '%');
-            if (this.ended)
-                self.playOther(self.currentPlay + 1);
-            
-            $('.time-info').text(cm+':'+cs+'/'+dm+':'+ds);
-
-            if (this.currentTime < self.lrc[2].timeline)
-                return;
-            while (!(this.currentTime >= self.lrc[i].timeline && this.currentTime < self.lrc[i + 1].timeline)) {
-                i++;
-                if (i >= self.lrc.length - 1)
-                    return;
-            }
-            $('.lrc-text').css({
-                transform: 'translate3D(0, ' + (-18 * (i - 1)) + 'px, 0)'
-            });
-            
-        });
-
+        $(self.audio).on('timeupdate', this.handleTimeUpdate(self));
 
         gutter.on('mouseenter', function (ev) {
             timeInfo.css({
-                top: ev.pageY+10,
-                left: ev.pageX+10,
+                top: ev.pageY + 10,
+                left: ev.pageX + 10,
                 display: 'block'
             });
             gutter.on('mousemove', function (ev) {
                 timeInfo.css({
-                    top: ev.pageY+10,
-                    left: ev.pageX+10
+                    top: ev.pageY + 10,
+                    left: ev.pageX + 10
                 });
                 ev.halt();
             });
@@ -146,7 +118,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         new IO({
             type: "get",
-//            url: "music-data.js",
+            //                        url: "music-data.js",
             url: "displayTop10Songs",
             success: function (data) {
                 self.musicData = data;
@@ -160,6 +132,39 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         this.makeLrc();
     };
+
+    Player.prototype.handleTimeUpdate = function (self) {
+
+        return function () {
+            var handler = $('.handler'),
+                handPos = 0,
+                gutter = $('.gutter'),
+                timeInfo = $('.time-info');
+            var i = 2,
+                cm = Math.floor(this.currentTime / 60),
+                cs = Math.floor(this.currentTime % 60),
+                dm = Math.floor(this.duration / 60),
+                ds = Math.floor(this.duration % 60);
+
+            handPos = this.currentTime / this.duration * 100;
+            handler.css('left', handPos - 1 + '%');
+            if (this.ended)
+                self.playOther(self.currentPlay + 1);
+
+            $('.time-info').text(cm + ':' + cs + '/' + dm + ':' + ds);
+
+            if (this.currentTime < self.lrc[2].timeline)
+                return;
+            while (!(this.currentTime >= self.lrc[i].timeline && this.currentTime < self.lrc[i + 1].timeline)) {
+                i++;
+                if (i >= self.lrc.length - 1)
+                    return;
+            }
+            $('.lrc-text').css({
+                transform: 'translate3D(0, ' + (-18 * (i - 1)) + 'px, 0)'
+            });
+        }
+    }
 
     Player.prototype.initPanel = function () {
         var self = this,
@@ -280,12 +285,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         this.audio.remove();
         this.audio = $('<audio src="' + this.mList[this.currentPlay].src + '"></audio>')[0];
         this.el.append(this.audio);
-        $(this.audio).on('timeupdate', function () {
-            handPos = this.currentTime / this.duration * 100;
-            handler.css('left', handPos - 1 + '%');
-            if (this.ended)
-                self.playOther(self.currentPlay + 1);
-        });
+        $(this.audio).on('timeupdate', this.handleTimeUpdate(self));
         $(this.audio).on('progress', function () {});
         this.audio.play();
 
@@ -421,7 +421,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         $('.t-chinese .more').on('click', function () {
             new IO({
                 type: "get",
-//                url: 'get-more.js',
+                //                                url: 'get-more.js',
                 url: 'displayMoreSongs',
                 data: {
                     type: "chinese",
@@ -442,10 +442,15 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
     }
 
     Player.prototype.makeLrc = function () {
-        var self = this;
+        var self = this,
+            idData = self.mList[self.currentPlay].id;
         new IO({
             type: "get",
-            url: 'lyric-data.js',
+            //                        url: 'lyric-data.js',
+            url: 'getLyric',
+            data: {
+                id: idData
+            },
             dataType: "json",
             success: function (data) {
                 var elStr = '';
@@ -454,6 +459,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                     elStr += '<p class="line" data-index = "' + i + '">' + self.lrc[i].text + '</p>'
                 }
                 $('.lyric .lrc-text').append(elStr);
+
+                console.log(JSON.stringify(data));
             },
             error: function (m, io) {
                 console.log(m);
@@ -485,15 +492,29 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             hint.css('visibility', 'hidden');
         });
         searchInput.on('valuechange', function (ev) {
-            hint.css('visibility', 'visible');
-            console.log(ev.prevVal + ',' + ev.newVal);
+            var key = ev.newVal;
+            new IO({
+                type: "get",
+                //                                url: "lyric-data.js",
+                url: "fuzzySearch",
+                data: {
+                    "searchKey": key
+                },
+                success: function (data) {
+                    hint.text(JSON.stringify(data)).css('visibility', 'visible');
+                },
+                error: function (m, io) {
+                    console.log(m);
+                },
+                dataType: "json"
+            });
         });
-        
-        function searchKeyWord (){
+
+        function searchKeyWord() {
             var key = searchInput.val();
             new IO({
                 type: "get",
-//                url: "music-data.js",
+                //                                url: "music-data.js",
                 url: "accurateSearch",
                 data: {
                     "searchKey": key
@@ -508,9 +529,9 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                 dataType: "json"
             });
         }
-        
-        searchInput.on('keydown', function(ev){
-            if(ev.keyCode === 13){
+
+        searchInput.on('keydown', function (ev) {
+            if (ev.keyCode === 13) {
                 searchKeyWord();
                 ev.halt();
             }

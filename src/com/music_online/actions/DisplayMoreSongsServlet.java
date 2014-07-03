@@ -33,6 +33,7 @@ public class DisplayMoreSongsServlet extends HttpServlet {
 		IMusicService aMusicService = new MusicServiceImpl();
 		ArrayList<Music> moreSongs;
 		int transmittedNumber;
+
 		String typeChinese = null;
 		StringBuffer moreSongsStrbuf = new StringBuffer();
 		String moreSongsStr = null;

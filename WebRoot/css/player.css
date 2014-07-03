@@ -456,9 +456,9 @@ a {
     -ms-transform-origin: 0 0;
     -o-transform-origin: 0 0;
     transform-origin: 0 0;
-    -webkit-transition: transform 0.1s ease-out;
-    -o-transition: transform 0.1s ease-out;
-    transition: transform 0.1s ease-out;
+    -webkit-transition: transform 0.2s ease-out;
+    -o-transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-out;
 }
 .lyric {
     overflow: hidden;
@@ -502,6 +502,7 @@ a {
     background-color: #FFF;
     color: #666;
     visibility: hidden;
+    overflow: hidden;
 }
 
 .text-body {
