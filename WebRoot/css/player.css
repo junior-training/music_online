@@ -399,8 +399,8 @@ a {
 .t-section .t-list .t-singer {
     width: 30%;
 }
-.t-list .t-control span,
-.t-list .t-control a {
+.t-control span,
+.t-control a {
     display: inline-block;
     height: 25px;
     line-height: 25px;
@@ -460,6 +460,31 @@ a {
     -o-transition: transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
 }
+
+.search-result ul{
+    width: 500px;
+    margin: auto;
+}
+
+.search-result li{
+    height: 25px;
+    line-height: 25px;
+}
+
+.search-result a{
+    display: inline-block;
+}
+
+.search-result li .t-song{
+    width: 50%;
+}
+
+.search-result li .t-singer{
+    width: 20%;
+}
+
+
+
 .lyric {
     overflow: hidden;
     font-size: 15px;

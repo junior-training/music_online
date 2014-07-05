@@ -25,7 +25,7 @@ public class MusicDao {
 		 ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id and song_genre='华语' order by song_popularity DESC limit 10 ";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -97,7 +97,7 @@ public class MusicDao {
     	ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id order by song_popularity DESC limit 10";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -136,7 +136,7 @@ public ArrayList<Music> getMoreSongsOf3Genres(String song_genre,int TransmittedN
     	ArrayList<Music> listMusic = new ArrayList<Music>();
 		 try {
 				String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id and song_genre='"+song_genre+"' order by song_popularity DESC limit "+TransmittedNumber+",15";
-				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+				dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
@@ -174,7 +174,7 @@ public ArrayList<Music> getMoreSongsOfRank(int TransmittedNumber){
 	ArrayList<Music> listMusic = new ArrayList<Music>();
 	 try {
 			String sql = "select * from tb_music,tb_popularity where tb_music.id=tb_popularity.id order by song_popularity DESC limit "+TransmittedNumber+",15";
-			dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+			dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){
@@ -212,7 +212,7 @@ public ArrayList<Music> accurateSearch(ArrayList<String> searchKeyList){
 	
 	ArrayList<Music> listMusic = new ArrayList<Music>();
 	 try {  
-		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		    String sql;
 		    for(int i=0;i<searchKeyList.size();i++){
 		    sql="select distinct * from tb_music where song_name like '%"+searchKeyList.get(i)+"%'" +
@@ -255,9 +255,12 @@ public ArrayList<Music> accurateSearch(ArrayList<String> searchKeyList){
 public  ArrayList<String> fuzzySearch(String type,String Str){
 	ArrayList<String> listString = new ArrayList<String>();
 	 try {  
-		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		    String sql;
-		    sql="select "+type+" from tb_music where "+type+"like '%"+Str+" %' limit 5";
+
+		    sql="select "+type+" from tb_music where "+type+" like '%"+Str+"%' limit 5";
+		    System.out.println(sql);
+
 		    pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){                               
@@ -285,10 +288,11 @@ public ArrayList<String> getLyricFilePathById(int id ){
 	ArrayList<String>  listString=new ArrayList<String>();
 	
 	 try {
-		dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
+		dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		String sql="select lyric_addr from tb_music where id="+id;
 		pstmt = dbconn.prepareStatement(sql);
 		rs=pstmt.executeQuery();
+		rs.next();
 		listString.add(rs.getString("lyric_addr"));
 		
 		rs.close();
