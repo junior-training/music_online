@@ -66,7 +66,7 @@ public class FuzzySearchServlet extends HttpServlet {
 		}
 		
 		//获取专辑列表
-		albumNameList = fuzzySearch("album_name",searchKey);
+		albumNameList = aMusicService.fuzzySearch("album_name",searchKey);
 		searchResultStrbuf.append("\"专辑\":[");
 		length = albumNameList.size();
 		if(0 == length)
@@ -91,7 +91,7 @@ public class FuzzySearchServlet extends HttpServlet {
 		}
 		
 		//获取歌曲列表
-		songNameList = fuzzySearch("song_name",searchKey);
+		songNameList = aMusicService.fuzzySearch("song_name",searchKey);
 		searchResultStrbuf.append("\"歌曲\":[");
 		length = songNameList.size();
 		if(0 == length)

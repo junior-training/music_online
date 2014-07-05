@@ -49,10 +49,7 @@
 
 
 
-  <servlet-mapping>
-    <servlet-name>MusicSearchServlet</servlet-name>
-    <url-pattern>/music_search</url-pattern>
-  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>DisplayTop10SongsServlet</servlet-name>
     <url-pattern>/displayTop10Songs</url-pattern>

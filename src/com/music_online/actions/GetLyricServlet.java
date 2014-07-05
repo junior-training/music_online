@@ -2,6 +2,7 @@ package com.music_online.actions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,9 +41,10 @@ public class GetLyricServlet extends HttpServlet {
 		IMusicService aMusicService = new MusicServiceImpl();
 		ILrcParserService aLrcParserService = new LrcParserServiceImpl();
 		
-		String lyricFilePath = aMusicService.getLyricFilePathById(id);
+		ArrayList<String> lyricFilePathList = aMusicService.getLyricFilePathById(id);
+		String lyricFilePath = lyricFilePathList.get(0);
 		
-		LrcInfo aLrcInfo;
+		LrcInfo aLrcInfo = null;
 		try{
 		aLrcInfo = aLrcParserService.parser(lyricFilePath);
 		}
