@@ -118,7 +118,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         new IO({
             type: "get",
-            //                        url: "music-data.js",
+            //            url: "music-data.js",
             url: "displayTop10Songs",
             success: function (data) {
                 self.musicData = data;
@@ -327,6 +327,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             ev.halt();
         });
         container.delegate('click', '.t-singer', function (ev) {
+            $('.search-result').css('display', 'none');
+            $('.text-body').css('display', 'block');
             $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
             ev.halt();
         });
@@ -421,7 +423,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         $('.t-chinese .more').on('click', function () {
             new IO({
                 type: "get",
-                //                                url: 'get-more.js',
+                //                url: 'get-more.js',
                 url: 'displayMoreSongs',
                 data: {
                     type: "chinese",
@@ -444,9 +446,10 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
     Player.prototype.makeLrc = function () {
         var self = this,
             idData = self.mList[self.currentPlay].id;
+        console.log(idData);
         new IO({
             type: "get",
-            //                        url: 'lyric-data.js',
+            //            url: 'lyric-data.js',
             url: 'getLyric',
             data: {
                 id: idData
@@ -459,8 +462,6 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                     elStr += '<p class="line" data-index = "' + i + '">' + self.lrc[i].text + '</p>'
                 }
                 $('.lyric .lrc-text').append(elStr);
-
-                console.log(JSON.stringify(data));
             },
             error: function (m, io) {
                 console.log(m);
@@ -481,8 +482,10 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
         var searchBar = $('.search-bar'),
             searchInput = $('.search-bar>input'),
             searchBtn = $('.search-bar>button'),
+            seatchResult = [],
             hint = $('.search-hint'),
-            textBody = $('.text-body');
+            textBody = $('.text-body'),
+            self = this;
 
         searchInput.on('focusin', function () {
             searchBar.css('box-shadow', '0 0 6px');
@@ -495,13 +498,19 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
             var key = ev.newVal;
             new IO({
                 type: "get",
-                //                                url: "lyric-data.js",
+                //                url: "fuzzy.js",
                 url: "fuzzySearch",
                 data: {
                     "searchKey": key
                 },
                 success: function (data) {
-                    hint.text(JSON.stringify(data)).css('visibility', 'visible');
+                    var mulStr = '';
+                    for (var i = 0; i < data["歌曲"].length; i++)
+                        mulStr += '<li>' + data["歌曲"][i].song_name + '</li>';
+                    console.log(mulStr);
+                    $('.search-hint ul li').remove();
+                    $('.search-hint ul').append(mulStr);
+                    $('.search-hint').css('visibility', 'visible');
                 },
                 error: function (m, io) {
                     console.log(m);
@@ -512,15 +521,24 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
 
         function searchKeyWord() {
             var key = searchInput.val();
+
             new IO({
                 type: "get",
-                //                                url: "music-data.js",
+                //                url: "get-more.js",
                 url: "accurateSearch",
                 data: {
                     "searchKey": key
                 },
                 success: function (data) {
-                    textBody.text(JSON.stringify(data));
+                    var dom = '';
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        dom += (new XTemplate(TypeTpl)).render(data[i]);
+                    }
+                    $('.search-result>ul li').remove();
+                    $('.search-result>ul').append(dom);
+                    searchResult = data;
+                    textBody.css('display', 'none');
+                    $('.search-result').css('display', 'block');
                     $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
                 },
                 error: function (m, io) {
@@ -529,6 +547,29 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, ListTpl, TypeTpl) {
                 dataType: "json"
             });
         }
+
+        $('.search-result>ul').delegate('click', '.search-result .add-plist', function (ev) {
+            var t = $(ev.currentTarget);
+
+            self.mList.push(searchResult[t.parent().parent().index()]);
+            localStorage.setItem('playlist', JSON.stringify(self.mList));
+            $('.music-list .m-list').append(new XTemplate(ListTpl).render(searchResult[t.parent().parent().index()]));
+
+            ev.halt();
+        });
+        $('.search-result>ul').delegate('click', '.search-result .play-now', function (ev) {
+            var t = $(ev.currentTarget);
+            self.mList.push(searchResult[t.parent().parent().index()]);
+            localStorage.setItem('playlist', JSON.stringify(self.mList));
+            $('.music-list .m-list').append(new XTemplate(ListTpl).render(searchResult[t.parent().parent().index()]));
+            self.playOther(self.mList.length - 1);
+            $('.toggle').css('background-position', '-264px -3px');
+            ev.halt();
+        });
+        $('.search-result>ul').delegate('click', '.t-singer', function (ev) {
+            $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
+            ev.halt();
+        });
 
         searchInput.on('keydown', function (ev) {
             if (ev.keyCode === 13) {
