@@ -291,6 +291,7 @@ public ArrayList<String> getLyricFilePathById(int id ){
 		pstmt = dbconn.prepareStatement(sql);
 		rs=pstmt.executeQuery();
 		
+		rs.next();
 		listString.add(rs.getString("lyric_addr"));
 		
 		rs.close();
