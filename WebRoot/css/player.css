@@ -473,6 +473,8 @@ a {
 
 .search-result a{
     display: inline-block;
+    height: 25px;
+    overflow: hidden;
 }
 
 .search-result li .t-song{
@@ -496,10 +498,10 @@ a {
     color: #666;
 }
 .default-info {
-/*    display: none;*/
+    display: none;
 }
 .lrc-text {
-    display: none;
+/*    display: none;*/
     -webkit-transition: transform 0.1s ease;
     -o-transition: transform 0.1s ease;
     transition: transform 0.1s ease;
@@ -507,8 +509,8 @@ a {
 .close {
     display: block;
     position: absolute;
-    right: 0;
-    top: 0px;
+    right: 10px;
+    top: 30px;
     width: 20px;
     height: 20px;
     background-color: black;
@@ -531,6 +533,7 @@ a {
 }
 
 .text-body {
+    margin: 30px;
 }
 
 .time-info {
@@ -553,13 +556,51 @@ a {
     position: absolute;
     width: 30px;
     height: 30px;
-/*    background-color: #000;*/
-    right: 70px;
-    bottom: 50px;
+    bottom: 0;
     background-image: url(../resource/img/player.png);
-    background-position: -195px -135px;
-    
+    background-position: -195px -167px;
+    cursor: pointer;
 }
-.volIcon:hover{
 
+.volIcon.mute{
+    background-position: -195px -195px;
+}
+
+.barWrap{
+    transform-origin: bottom;
+    transform: rotateX(90deg);
+    -webkit-transition: transform 0.3s ease;
+    -o-transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
+    height: 120px;
+}
+
+.volBar {
+    position: relative;
+    top: 10px;
+    height: 100px;
+    width: 5px;
+    background-color: #FFF;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.volume {
+    position: absolute;
+    height: 150px;
+    width: 30px;
+    bottom: 30px;
+    right: 100px;
+}
+
+.vol-handler {
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: skyblue;
+    border: 1px solid blue;
+    left: -2px;
+    top: 49%;
 }
