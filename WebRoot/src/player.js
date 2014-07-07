@@ -29,6 +29,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             }
         };
         this.animCD = new Anim(this.animImg, this.animStyle, this.animCfg);
+        this.typeListenTimes = 0;
     }
 
     Player.prototype.init = function () {
@@ -164,10 +165,6 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                     posTop = 100;
                 node.css('top', posTop);
             }
-        });
-
-        $(document).delegate('click', '.download', function (ev) {
-
         });
     };
 
@@ -324,7 +321,6 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         listEl.delegate('click', '.m-operate .m-delete', function (ev) {
             var el = $(ev.currentTarget).parent().parent(),
                 index = el.index();
-            console.log(index);
             self.mList.splice(index, 1);
             localStorage.setItem('playlist', JSON.stringify(self.mList));
             el.remove();
@@ -391,7 +387,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         new IO({
             type: "post",
             //            url: 'lyric-datas.js',
-            url: 'updateListeningHistory',
+            url: 'sendListeningHistory',
             data: {
                 id: idData,
                 type: 'listen'
@@ -415,6 +411,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         listStr = tempList.join('\n');
         container.append(listStr);
 
+        if (this.typeListenTimes >= 4)
+            return;
         container.delegate('click', '.t-list .add-plist', function (ev) {
             var t = $(ev.currentTarget);
             self.addToPlaylist(listType, t.parent().parent().index());
@@ -436,6 +434,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
             ev.halt();
         });
+        console.log(this.typeListenTimes++);
     }
 
     Player.prototype.logDownload = function (index, type) {
@@ -541,34 +540,40 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             }
         });
 
-        $('.t-chinese .more').on('click', function () {
+        $('.t-chinese .more').on('click', this.handlerMore('chinese'));
+        $('.t-western .more').on('click', this.handlerMore('western'));
+        $('.t-jk .more').on('click', this.handlerMore('jk'));
+        $('.t-rank .more').on('click', this.handlerMore('rank'));
+
+    }
+
+    Player.prototype.handlerMore = function (listType) {
+        var self = this;
+        return function () {
             new IO({
                 type: "get",
                 //                url: 'get-more.js',
                 url: 'displayMoreSongs',
                 data: {
-                    type: "chinese",
+                    type: listType,
                     index: "1"
                 },
                 success: function (data) {
-                    $('.t-chinese .t-list li').remove();
-                    self.musicData.chinese = data;
-                    self.mkTypeList('chinese');
+                    $('.t-' + listType + ' .t-list li').remove();
+                    self.musicData[listType] = data;
+                    self.mkTypeList(listType);
                 },
                 error: function (m, io) {
                     console.log(m);
                 },
                 dataType: "json"
             });
-        });
-
-    }
+        }
+    };
 
     Player.prototype.makeLrc = function () {
         var self = this;
-
         var idData = this.mList[this.currentPlay].id;
-
         new IO({
             type: "get",
             //            url: 'lyric-datas.js',
@@ -622,6 +627,9 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         });
         searchInput.on('valuechange', function (ev) {
             var key = ev.newVal;
+            $('.search-hint ul li').remove();
+            if(key === '')
+                return;
             new IO({
                 type: "get",
                 //                url: "fuzzy.js",
@@ -630,12 +638,31 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                     "searchKey": key
                 },
                 success: function (data) {
-                    var mulStr = '';
-                    if (data["歌曲"].length === 0) return;
-                    for (var i = 0; i < data["歌曲"].length; i++)
-                        mulStr += '<li>' + data["歌曲"][i].song_name + '</li>';
+                    var mulStr = '',
+                        resultCount = 0;
+                    if (data["歌曲"].length === 0
+                       &&data["歌手"].length === 0
+                       &&data["专辑"].length === 0) return;
+                    for (var i = 0; i < data["歌曲"].length; i++){
+                        if(resultCount >= 5)
+                            break;
+                        mulStr += '<li>' + data["歌曲"][i].songName + '</li>';
+                        resultCount++;
+                    }
+                    for (var i = 0; i < data["歌手"].length; i++){
+                        if(resultCount >= 5)
+                            break;
+                        mulStr += '<li>' + data["歌手"][i].singerName + '</li>';
+                        resultCount++;
+                        console.log(data["歌手"]);
+                    }
+                    for (var i = 0; i < data["专辑"].length; i++){
+                        if(resultCount >= 5)
+                            break;
+                        mulStr += '<li>' + data["专辑"][i].albumName + '</li>';
+                        resultCount++;
+                    }
                     console.log(mulStr);
-                    $('.search-hint ul li').remove();
                     $('.search-hint ul').append(mulStr);
                     $('.search-hint').css('visibility', 'visible');
                 },
@@ -648,7 +675,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
 
         function searchKeyWord() {
             var key = searchInput.val();
-
+            if(key === '')
+                return;
             new IO({
                 type: "get",
                 //                url: "get-more.js",
