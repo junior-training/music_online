@@ -219,6 +219,7 @@ a {
     -o-transition: -o-transform 0.3s ease;
     transition: transform 0.3s ease;
     z-index: 100;
+    overflow: auto;
 }
 .music-list {
     left: -300px;
@@ -252,7 +253,7 @@ a {
     color: #90ee90;
 }
 .list-item .m-title {
-    width: 30%;
+    width: 25%;
 }
 .list-item .m-artist {
     width: 20%;
