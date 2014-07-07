@@ -44,7 +44,16 @@ public class GetLyricServlet extends HttpServlet {
 		
 		ArrayList<String> lyricFilePathList = aMusicService.getLyricFilePathById(id);
 		String lyricFilePath = lyricFilePathList.get(0);
+		
+		//System.out.println(lyricFilePath);
+		
+
+		String curProjectPath = request.getSession().getServletContext().getRealPath("/");
+		//System.out.println(curProjectPath);
+		
+		lyricFilePath = curProjectPath + "/" + lyricFilePath;
 		System.out.println(lyricFilePath);
+		
 		
 		LrcInfo aLrcInfo = null;
 		try{
@@ -52,7 +61,7 @@ public class GetLyricServlet extends HttpServlet {
 		}
 		catch(Exception e)
 		{
-			System.out.println("Parser lyric failed!");
+			System.out.println(e);
 		}
 		
 		
