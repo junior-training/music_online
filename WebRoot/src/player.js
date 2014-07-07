@@ -99,7 +99,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         $(self.audio).on('timeupdate', this.handleTimeUpdate(self));
 
         gutter.on('mouseenter', function (ev) {
-            if(self.audio.currentTime === 0)
+            if (self.audio.currentTime === 0)
                 return;
             timeInfo.css({
                 top: ev.pageY + 10,
@@ -120,18 +120,18 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             });
             gutter.detach('mousemove');
         });
-        gutter.on('click', function(ev){
-            if(self.audio.currentTime === undefined)
+        gutter.on('click', function (ev) {
+            if (self.audio.currentTime === undefined)
                 return;
-            self.audio.currentTime = (Math.floor(ev.pageX/$(this).width()*1000+3)/1000)*Math.floor(self.audio.duration);
+            self.audio.currentTime = (Math.floor(ev.pageX / $(this).width() * 1000 + 3) / 1000) * Math.floor(self.audio.duration);
         });
 
         this.handleDetail();
 
         new IO({
             type: "get",
-            url: "music-data.js",
-            //            url: "displayTop10Songs",
+            //            url: "music-data.js",
+            url: "displayTop10Songs",
             success: function (data) {
                 self.musicData = data;
                 self.initTeyeWrap(data);
@@ -141,33 +141,33 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             },
             dataType: "json"
         });
-        
+
         this.handleVol();
-        
+
         this.makeLrc();
-        
+
         new dd.Draggable({
-            'node':'.handler',
+            'node': '.handler',
         });
         new dd.Draggable({
-            'node':'.vol-handler'
+            'node': '.vol-handler'
         });
-        dd.DDM.on('drag', function(ev){
+        dd.DDM.on('drag', function (ev) {
             var node = $(ev.drag.userConfig.node);
-            if(node.hasClass('handler'))
-                node.css('left', ev.pageX-15);
-            if(node.hasClass('vol-handler')){
+            if (node.hasClass('handler'))
+                node.css('left', ev.pageX - 15);
+            if (node.hasClass('vol-handler')) {
                 var posTop = ev.pageY - node.parent().offset().top - 5;
-                if(posTop < 0)
+                if (posTop < 0)
                     posTop = 0;
-                if(posTop > 100)
+                if (posTop > 100)
                     posTop = 100;
                 node.css('top', posTop);
             }
         });
-        
-        $(document).delegate('click', '.download', function(ev){
-            
+
+        $(document).delegate('click', '.download', function (ev) {
+
         });
     };
 
@@ -260,44 +260,44 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             volBar = $('.volBar'),
             barWrap = $('.barWrap'),
             volHandler = $('.vol-handler');
-        
-        volIcon.on('mouseenter', function (ev){
+
+        volIcon.on('mouseenter', function (ev) {
             barWrap.css('transform', 'rotateX(0)');
             ev.halt();
         });
-        volEl.on('mouseleave', function (ev){
+        volEl.on('mouseleave', function (ev) {
             barWrap.css('transform', 'rotateX(90deg)');
             ev.halt();
         });
-        
-        volIcon.on('click', function(ev){
+
+        volIcon.on('click', function (ev) {
             $(this).toggleClass('mute');
-            if(self.audio.volume === 0){
+            if (self.audio.volume === 0) {
                 self.audio.volume = self.volume;
-                volHandler.css('top', (100-self.volume*100-1)+'%');
-            }else{
+                volHandler.css('top', (100 - self.volume * 100 - 1) + '%');
+            } else {
                 self.audio.volume = 0;
                 volHandler.css('top', '99%');
-                
+
             }
             ev.halt();
         });
-        
-        volBar.on('click', function(ev){
-            volHandler.css('top', (ev.pageY - volBar.offset().top - 5)+'px');
-            var v = (volHandler.offset().top - volBar.offset().top)/100;
-            if(v < 0)
+
+        volBar.on('click', function (ev) {
+            volHandler.css('top', (ev.pageY - volBar.offset().top - 5) + 'px');
+            var v = (volHandler.offset().top - volBar.offset().top) / 100;
+            if (v < 0)
                 v = 0;
-            else if(v > 1)
+            else if (v > 1)
                 v = 1;
-            self.audio.volume = self.volume = 1-v;
-            if(self.audio.volume === 0)
+            self.audio.volume = self.volume = 1 - v;
+            if (self.audio.volume === 0)
                 volIcon.addClass('mute');
             else
                 volIcon.removeClass('mute');
         });
     }
-    
+
     Player.prototype.getPlaylist = function () {
         var list = [];
         list = JSON.parse(localStorage.getItem('playlist'));
@@ -373,7 +373,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         $(this.audio).on('timeupdate', this.handleTimeUpdate(self));
         $(this.audio).on('progress', function () {});
         this.audio.play();
-        if($('.volIcon').hasClass('mute')) this.audio.volume = 0;
+        if ($('.volIcon').hasClass('mute')) this.audio.volume = 0;
 
         $($('.p-info a')[0]).text(this.mList[this.currentPlay].title);
         $($('.p-info a')[1]).text(this.mList[this.currentPlay].artist);
@@ -386,12 +386,12 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
 
         this.animImg.css('background-image', 'url("' + this.mList[this.currentPlay].img + '")');
         this.makeLrc();
-        
+
         var idData = this.mList[this.currentPlay].id;
         new IO({
             type: "post",
-            url: 'lyric-datas.js',
-            //            url: 'updateListeningHistory',
+            //            url: 'lyric-datas.js',
+            url: 'updateListeningHistory',
             data: {
                 id: idData,
                 type: 'listen'
@@ -438,17 +438,17 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         });
     }
 
-    Player.prototype.logDownload = function(index, type){
+    Player.prototype.logDownload = function (index, type) {
         var id;
-        if(arguments.length === 2){
+        if (arguments.length === 2) {
             id = this.musicData[type][index].id;
-        }else if(arguments.length === 1){
+        } else if (arguments.length === 1) {
             id = this.mList[index].id;
         }
         new IO({
             type: "post",
-            url: 'lyric-datas.js',
-            //            url: 'updateListeningHistory',
+            //            url: 'lyric-datas.js',
+            url: 'updateListeningHistory',
             data: {
                 id: id,
                 type: 'download'
@@ -458,7 +458,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             }
         });
     }
-    
+
     Player.prototype.initTeyeWrap = function (data) {
         var self = this,
             nav = $('.type-nav'),
@@ -544,8 +544,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         $('.t-chinese .more').on('click', function () {
             new IO({
                 type: "get",
-                url: 'get-more.js',
-                //                url: 'displayMoreSongs',
+                //                url: 'get-more.js',
+                url: 'displayMoreSongs',
                 data: {
                     type: "chinese",
                     index: "1"
@@ -571,8 +571,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
 
         new IO({
             type: "get",
-            url: 'lyric-datas.js',
-            //            url: 'getLyric',
+            //            url: 'lyric-datas.js',
+            url: 'getLyric',
             data: {
                 id: idData
             },
@@ -624,16 +624,16 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             var key = ev.newVal;
             new IO({
                 type: "get",
-                url: "fuzzy.js",
-                //                url: "fuzzySearch",
+                //                url: "fuzzy.js",
+                url: "fuzzySearch",
                 data: {
                     "searchKey": key
                 },
                 success: function (data) {
                     var mulStr = '';
-                    if(data["歌曲"].length === 0) return;
-                    for( var i = 0; i < data["歌曲"].length; i++)
-                        mulStr += '<li>'+data["歌曲"][i].song_name+'</li>';
+                    if (data["歌曲"].length === 0) return;
+                    for (var i = 0; i < data["歌曲"].length; i++)
+                        mulStr += '<li>' + data["歌曲"][i].song_name + '</li>';
                     console.log(mulStr);
                     $('.search-hint ul li').remove();
                     $('.search-hint ul').append(mulStr);
@@ -651,8 +651,8 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
 
             new IO({
                 type: "get",
-                url: "get-more.js",
-                //                url: "accurateSearch",
+                //                url: "get-more.js",
+                url: "accurateSearch",
                 data: {
                     "searchKey": key
                 },
