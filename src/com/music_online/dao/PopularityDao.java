@@ -18,12 +18,7 @@ public class PopularityDao {
     
     public int updatePopularity(Popularity pop) throws SQLException{ 
     	
-    	pop.getId();
-    	pop.getListenTime();
-    	pop.getDownloadTime();
-    	pop.getPopularityDegree();
-    	
-		 try {
+    	try {
 			    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
 				String sql="select audition_time,download_time song_populartity from tb_popularity where id="+pop.getId();
 		    	pstmt = dbconn.prepareStatement(sql);

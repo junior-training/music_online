@@ -257,8 +257,10 @@ public  ArrayList<String> fuzzySearch(String type,String Str){
 	 try {  
 		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		    String sql;
+
 		    sql="select "+type+" from tb_music where "+type+" like '%"+Str+"%' limit 5";
 		    System.out.println(sql);
+
 		    pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()){                               
@@ -290,7 +292,7 @@ public ArrayList<String> getLyricFilePathById(int id ){
 		String sql="select lyric_addr from tb_music where id="+id;
 		pstmt = dbconn.prepareStatement(sql);
 		rs=pstmt.executeQuery();
-		
+
 		rs.next();
 		listString.add(rs.getString("lyric_addr"));
 		
