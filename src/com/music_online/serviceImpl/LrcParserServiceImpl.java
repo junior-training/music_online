@@ -46,7 +46,7 @@ public class LrcParserServiceImpl implements ILrcParserService {
 
 	public LrcInfo parser(String path) throws Exception {
 		 
-		 System.out.println(path);
+		 //System.out.println(path);
 		 InputStream in = readLrcFile(path);  
          lrcinfo = parser(in);  
          return lrcinfo;  

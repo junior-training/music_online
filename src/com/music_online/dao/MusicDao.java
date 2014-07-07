@@ -258,7 +258,7 @@ public  ArrayList<String> fuzzySearch(String type,String Str){
 		    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
 		    String sql;
 
-		    sql="select "+type+" from tb_music where "+type+" like '%"+Str+"%' limit 5";
+		    sql="select distinct "+type+" from tb_music where "+type+" like '%"+Str+"%' limit 5";
 		    System.out.println(sql);
 
 		    pstmt = dbconn.prepareStatement(sql);

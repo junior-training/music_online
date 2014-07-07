@@ -1,5 +1,6 @@
 package com.music_online.actions;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import com.music_online.service.ILrcParserService;
 import com.music_online.service.IMusicService;
 import com.music_online.serviceImpl.LrcParserServiceImpl;
 import com.music_online.serviceImpl.MusicServiceImpl;
+
 
 public class GetLyricServlet extends HttpServlet {
 
@@ -53,20 +55,33 @@ public class GetLyricServlet extends HttpServlet {
 		
 		lyricFilePath = curProjectPath + "/" + lyricFilePath;
 		System.out.println(lyricFilePath);
+		File lyricFile = new File(lyricFilePath);
 		
+		String lyricInfoJson;
 		
-		LrcInfo aLrcInfo = null;
-		try{
-		aLrcInfo = aLrcParserService.parser(lyricFilePath);
-		}
-		catch(Exception e)
+		if(lyricFile.exists())
 		{
-			System.out.println(e);
+			LrcInfo aLrcInfo = null;
+			try{
+			aLrcInfo = aLrcParserService.parser(lyricFilePath);
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+			
+			lyricInfoJson = aLrcInfo.getJsonOfLrc();
+			System.out.println(lyricInfoJson);
+		}
+		else
+		{
+			lyricInfoJson = "[]";
+			System.out.println(lyricInfoJson);
 		}
 		
 		
-		String lyricInfoJson = aLrcInfo.getJsonOfLrc();
-		System.out.println(lyricInfoJson);
+		
+		
 		
 		response.setCharacterEncoding("utf-8");
         response.setHeader("Cache-Control", "no-cache");

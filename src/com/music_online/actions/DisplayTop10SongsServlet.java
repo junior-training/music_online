@@ -30,7 +30,7 @@ public class DisplayTop10SongsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		System.out.println("step1!");
+		
 		IMusicService aMusicService = new MusicServiceImpl();
         ArrayList<Music> top10SongsOf3Genres = aMusicService.getTop10SongsOf3Genres();
         ArrayList<Music> top10SongsOfRank;

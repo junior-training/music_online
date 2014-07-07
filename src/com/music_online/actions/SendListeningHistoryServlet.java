@@ -14,8 +14,8 @@ import com.music_online.service.IPopularityService;
 import com.music_online.serviceImpl.PopularityImpl;
 
 
-import net.sf.json.JSONObject; 
-import net.sf.json.JSONArray;
+//import net.sf.json.JSONObject; 
+//import net.sf.json.JSONArray;
 
 public class SendListeningHistoryServlet extends HttpServlet {
 
@@ -63,6 +63,14 @@ public class SendListeningHistoryServlet extends HttpServlet {
 		else if(-1 == result)
 			System.out.println("Update popularity failed!");*/
 		
+		
+		
+		
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String idStr = request.getParameter("id");
 		String type = request.getParameter("type");
 		
@@ -75,27 +83,6 @@ public class SendListeningHistoryServlet extends HttpServlet {
 			System.out.println("Update popularity success!");
 		else if(-1 == result)
 			System.out.println("Update popularity failed!");
-		
-		
-	}
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out
-				.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the POST method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
 	}
 
 	/**
