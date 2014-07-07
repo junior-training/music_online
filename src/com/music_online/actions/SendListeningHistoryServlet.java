@@ -33,7 +33,7 @@ public class SendListeningHistoryServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String listeningHistory = request.getParameter("listeningHistory");
+		/*String listeningHistory = request.getParameter("listeningHistory");
 		ArrayList<Popularity> songPopularity = new ArrayList<Popularity>();
 		
 		IPopularityService aPopularityService = new PopularityImpl();
@@ -61,7 +61,21 @@ public class SendListeningHistoryServlet extends HttpServlet {
 		if(1 == result)
 			System.out.println("Update popularity success!");
 		else if(-1 == result)
+			System.out.println("Update popularity failed!");*/
+		
+		String idStr = request.getParameter("id");
+		String type = request.getParameter("type");
+		
+		int id = Integer.parseInt(idStr);
+		
+		IPopularityService aPopularityService = new PopularityImpl();
+		int result = aPopularityService.updatePopularity(id,type);
+		
+		if(1 == result)
+			System.out.println("Update popularity success!");
+		else if(-1 == result)
 			System.out.println("Update popularity failed!");
+		
 		
 	}
 

@@ -16,27 +16,58 @@ public class PopularityDao {
     static ResultSet rs = null;
 
     
-    public int updatePopularity(Popularity pop) throws SQLException{ 
+    public int updatePopularity(int id,String type) throws SQLException{ 
     	
     	try {
-			    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "0926");
-				String sql="select audition_time,download_time song_populartity from tb_popularity where id="+pop.getId();
+			    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
+				String sql="select audition_time,download_time,song_populartity from tb_popularity where id="+id;
 		    	pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
-				int listenTime=pop.getListenTime()+rs.getInt("audition_time");
-				int downloadTime=pop.getDownloadTime()+rs.getInt("download_time");
-                int popularityDegree=pop.getListenTime()+3*pop.getDownloadTime()+rs.getInt("song_popularity");
-				
+				if(type.equals("listen")){
+					
+				rs.next();
+				int listenTime=rs.getInt("audition_time")+1;
+				int popularityDegree=1 + rs.getInt("song_popularity");
 				sql="update tb_popularity set audition_time="+listenTime+
-	            ",download_time="+downloadTime+
-	            ",song_popularity="+popularityDegree+"where id="+pop.getId();
+	                ",song_popularity="+popularityDegree+" where id="+id;
+				
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
 				rs.close();
-			    pstmt.close();  
-			    return 1;
+		        pstmt.close();  
+		        
+		        try {
+					dbconn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return -1;
+				}
+				
+		        return 1;
+				
+				}
+				else
+					rs.next();
+				    int downloadTime=rs.getInt("download_time")+1;
+				    int popularityDegree=3 + rs.getInt("song_popularity");
+				    sql="update tb_popularity set download_time="+downloadTime+
+	                ",song_popularity="+popularityDegree+" where id="+id;
+				    
+				    pstmt = dbconn.prepareStatement(sql);
+				    rs = pstmt.executeQuery();
+				    rs.close();
+			        pstmt.close();  
+			        
+			        try {
+						dbconn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						return -1;
+					}
+					
+			        return 1;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				return -1;

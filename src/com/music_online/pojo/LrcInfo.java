@@ -44,7 +44,7 @@ public class LrcInfo {
 			double secs = Double.parseDouble(String.valueOf(time));
 			secs /= 1000;
 			
-			lrcInJson = lrcInJson + "{" + "\"timeline\"" + ":" + secs + ",";
+			lrcInJson = lrcInJson + "{" + "\"timeline\"" + ":" + secs + "0,";
 			lrcInJson = lrcInJson + "\"text\"" + ":" + "\"" + value + "\"" + "}";
 			if (i != lastElement) lrcInJson += ",";
 		}

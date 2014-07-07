@@ -515,8 +515,10 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
     }
 
     Player.prototype.makeLrc = function () {
-        var self = this,
-            idData = this.mList[this.currentPlay].id;
+        var self = this;
+        idData = this.mList[this.currentPlay]
+        var idData = this.mList[this.currentPlay].id;
+        
         console.log(idData);
         new IO({
             type: "get",
