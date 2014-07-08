@@ -29,7 +29,7 @@ public class MusicDao {
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				while (rs.next()){
-					System.out.println("mysql test");
+					
 					Music music = new Music();
 				    music.setId(rs.getInt("id"));
                     music.setSong_name(rs.getString("song_name"));

@@ -20,7 +20,7 @@ public class PopularityDao {
     	
     	try {
 			    dbconn = DBConnector.getMySQLConnection(null, null, null, "db_music_online", "root", "123456");
-				String sql="select audition_time,download_time,song_populartity from tb_popularity where id="+id;
+				String sql="select audition_time,download_time,song_popularity from tb_popularity where id="+id;
 		    	pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
@@ -33,7 +33,7 @@ public class PopularityDao {
 	                ",song_popularity="+popularityDegree+" where id="+id;
 				
 				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 				rs.close();
 		        pstmt.close();  
@@ -49,6 +49,7 @@ public class PopularityDao {
 				
 				}
 				else
+				{
 					rs.next();
 				    int downloadTime=rs.getInt("download_time")+1;
 				    int popularityDegree=3 + rs.getInt("song_popularity");
@@ -56,7 +57,7 @@ public class PopularityDao {
 	                ",song_popularity="+popularityDegree+" where id="+id;
 				    
 				    pstmt = dbconn.prepareStatement(sql);
-				    rs = pstmt.executeQuery();
+				    pstmt.executeUpdate();
 				    rs.close();
 			        pstmt.close();  
 			        
@@ -68,6 +69,7 @@ public class PopularityDao {
 					}
 					
 			        return 1;
+				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				return -1;
