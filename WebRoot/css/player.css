@@ -206,6 +206,7 @@ a {
     background-position: -6px 40px;
     background-image: url(../resource/img/player.png);
 }
+
 .music-list,
 .type-wrap {
     font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
@@ -525,6 +526,14 @@ a {
     color: #666;
     visibility: hidden;
     overflow: hidden;
+}
+
+.search-hint .s-type{
+    position: absolute;
+    right: 0;
+}
+.search-hint .selected {
+    background-color: black;
 }
 .text-body {
     margin: 30px;

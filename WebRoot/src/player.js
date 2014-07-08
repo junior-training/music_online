@@ -13,6 +13,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             jk: 0,
             rank: 0
         };
+        this.hintIndex = -1;
         this.musicData = {};
         this.mList = [];
         this.lrc = [];
@@ -724,19 +725,19 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                     for (var i = 0; i < data["歌曲"].length; i++) {
                         if (resultCount >= 5)
                             break;
-                        mulStr += '<li>' + data["歌曲"][i].songName + '</li>';
+                        mulStr += '<li><span class = "s-info">' + data["歌曲"][i].songName + '</span><span class = "s-type">歌曲</span></li>';
                         resultCount++;
                     }
                     for (var i = 0; i < data["歌手"].length; i++) {
                         if (resultCount >= 5)
                             break;
-                        mulStr += '<li>' + data["歌手"][i].singerName + '</li>';
+                        mulStr += '<li><span class = "s-info">' + data["歌手"][i].singerName + '</span><span class = "s-type">歌手</span></li>';
                         resultCount++;
                     }
                     for (var i = 0; i < data["专辑"].length; i++) {
                         if (resultCount >= 5)
                             break;
-                        mulStr += '<li>' + data["专辑"][i].albumName + '</li>';
+                        mulStr += '<li><span class = "s-info">' + data["专辑"][i].albumName + '</span><span class = "s-type">专辑</span></li>';
                         resultCount++;
                     }
                     $('.search-hint ul').append(mulStr);
@@ -803,9 +804,35 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         });
 
         searchInput.on('keydown', function (ev) {
-            if (ev.keyCode === 13) {
+            var hintItem = $('.search-hint ul li');
+            switch (ev.keyCode) {
+            case 13:
+                /*enter*/
+                if($('.search-hint .selected').length !== 0)
+                    $('.search input').val($(hintItem[self.hintIndex]).one('.s-info').text());
                 searchKeyWord();
                 ev.halt();
+                break;
+            case 38:
+                /*arrow up*/
+                ev.halt();
+                if (hintItem.length === 0)
+                    return;
+                $(hintItem[self.hintIndex]).removeClass('selected');
+                if (--self.hintIndex < 0)
+                    self.hintIndex = hintItem.length - 1;
+                $(hintItem[self.hintIndex]).addClass('selected');
+                break;
+            case 40:
+                /*arrow down*/
+                ev.halt();
+                if (hintItem.length === 0)
+                    return;
+                $(hintItem[self.hintIndex]).removeClass('selected');
+                if (++self.hintIndex >= hintItem.length)
+                    self.hintIndex = 0;
+                $(hintItem[self.hintIndex]).addClass('selected');
+                break;
             }
         });
         searchBtn.on('click', searchKeyWord);
