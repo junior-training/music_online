@@ -7,9 +7,11 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         this.audio = this.el.one('audio')[0];
         this.volume = 0.5;
         this.animImg = $('.rotate-img');
-        this.userLog = {
-            listenTime: 0,
-            downloadTime: 0
+        this.pageIndex = {
+            chinese: 0,
+            western: 0,
+            jk: 0,
+            rank: 0
         };
         this.musicData = {};
         this.mList = [];
@@ -82,6 +84,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         showTypeBtn.on('click', function () {
             if (typeShown) {
                 typeWrap.css('transform', 'translate3d(300px, 0, 0)');
+                $('.volume').css('right', '100px');
                 $(this).css({
                     width: '40px',
                     border: 'none'
@@ -89,6 +92,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                 typeShown = false;
             } else {
                 typeWrap.css('transform', 'translate3d(-300px, 0, 0)');
+                $('.volume').css('right', '300px');
                 $(this).css({
                     width: '200px',
                     border: '1px solid'
@@ -327,9 +331,9 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             if (index < self.currentPlay) {
                 self.currentPlay--;
             } else if (index === self.currentPlay) {
-                console.log(index);
                 self.playOther(index);
-                self.audio.pause();
+            }
+            if (self.mList.length === 0) {
                 self.animCD.pause();
                 $('.toggle').css('background-position', '-34px -44px');
             }
@@ -434,7 +438,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             $('.detail-info').css('transform', 'translate3D(0, 340px, 0)');
             ev.halt();
         });
-        console.log(this.typeListenTimes++);
+        this.typeListenTimes++;
     }
 
     Player.prototype.logDownload = function (index, type) {
@@ -544,11 +548,76 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         $('.t-western .more').on('click', this.handlerMore('western'));
         $('.t-jk .more').on('click', this.handlerMore('jk'));
         $('.t-rank .more').on('click', this.handlerMore('rank'));
+        $('.t-section').delegate('click', '.prePage', function (ev) {
+            var parentEl = $(ev.currentTarget).parent();
+            var parentType = parentEl.hasClass('t-chinese') ? 'chinese' :
+                parentEl.hasClass('t-western') ? 'western' :
+                parentEl.hasClass('t-jk') ? 'jk' :
+                parentEl.hasClass('t-rank') ? 'rank' : undefined;
+            if (parentType === undefined)
+                return;
+            if (--self.pageIndex[parentType] === 0) {
+                self.pageIndex[parentType] = 1;
+                return;
+            }
+            getOtherPage(parentType, self.pageIndex[parentType]);
+        });
+        $('.t-section').delegate('click', '.nextPage', function (ev) {
 
+            var parentEl = $(ev.currentTarget).parent();
+            var parentType = parentEl.hasClass('t-chinese') ? 'chinese' :
+                parentEl.hasClass('t-western') ? 'western' :
+                parentEl.hasClass('t-jk') ? 'jk' :
+                parentEl.hasClass('t-rank') ? 'rank' : undefined;
+
+            if (parentType === undefined)
+                return;
+            var nextPage = $('.t-' + parentType + ' .nextPage');
+            if (nextPage.hasClass('disable')) {
+                return;
+            }
+            getOtherPage(parentType, ++self.pageIndex[parentType]);
+        });
+
+        function getOtherPage(listType, index) {
+            new IO({
+                type: "get",
+                //                url: 'get-more.js',
+                url: 'displayMoreSongs',
+                data: {
+                    type: listType,
+                    index: index
+                },
+                success: function (data) {
+                    var prePage = $('.t-' + listType + ' .prePage'),
+                        nextPage = $('.t-' + listType + ' .nextPage');
+                    $('.t-' + listType + ' .t-list li').remove();
+                    self.musicData[listType] = data;
+                    self.mkTypeList(listType);
+                    prePage.css('display', 'block');
+                    if (index === 1)
+                        prePage.addClass('disable');
+                    else if (index > 1)
+                        prePage.removeClass('disable');
+                    if (self.musicData[listType].length < 15) {
+                        nextPage.css('display', 'block').addClass('disable');
+                    } else {
+                        nextPage.css('display', 'block').removeClass('disable');
+                    }
+
+                },
+                error: function (m, io) {
+                    console.log(m);
+                },
+                dataType: "json"
+            });
+        }
     }
 
     Player.prototype.handlerMore = function (listType) {
         var self = this;
+        this.pageIndex[listType] = 1;
+
         return function () {
             new IO({
                 type: "get",
@@ -562,6 +631,13 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                     $('.t-' + listType + ' .t-list li').remove();
                     self.musicData[listType] = data;
                     self.mkTypeList(listType);
+                    $('.t-' + listType + ' .prePage').css('display', 'block').addClass('disable');
+                    if (self.musicData[listType].length < 15) {
+                        $('.t-' + listType + ' .nextPage').css('display', 'block').addClass('disable');
+                    } else {
+                        $('.t-' + listType + ' .nextPage').css('display', 'block');
+                    }
+
                 },
                 error: function (m, io) {
                     console.log(m);
@@ -583,6 +659,10 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
             },
             dataType: "json",
             success: function (data) {
+                if (data.length === 0) {
+                    $('.lyric').css('display', 'none');
+                    $('.default-info').css('display', 'block');
+                }
                 var elStr = '';
                 self.lrc = data;
                 for (var i = 0; i < self.lrc.length; i++) {
@@ -628,7 +708,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
         searchInput.on('valuechange', function (ev) {
             var key = ev.newVal;
             $('.search-hint ul li').remove();
-            if(key === '')
+            if (key === '')
                 return;
             new IO({
                 type: "get",
@@ -640,29 +720,25 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
                 success: function (data) {
                     var mulStr = '',
                         resultCount = 0;
-                    if (data["歌曲"].length === 0
-                       &&data["歌手"].length === 0
-                       &&data["专辑"].length === 0) return;
-                    for (var i = 0; i < data["歌曲"].length; i++){
-                        if(resultCount >= 5)
+                    if (data["歌曲"].length === 0 && data["歌手"].length === 0 && data["专辑"].length === 0) return;
+                    for (var i = 0; i < data["歌曲"].length; i++) {
+                        if (resultCount >= 5)
                             break;
                         mulStr += '<li>' + data["歌曲"][i].songName + '</li>';
                         resultCount++;
                     }
-                    for (var i = 0; i < data["歌手"].length; i++){
-                        if(resultCount >= 5)
+                    for (var i = 0; i < data["歌手"].length; i++) {
+                        if (resultCount >= 5)
                             break;
                         mulStr += '<li>' + data["歌手"][i].singerName + '</li>';
                         resultCount++;
-                        console.log(data["歌手"]);
                     }
-                    for (var i = 0; i < data["专辑"].length; i++){
-                        if(resultCount >= 5)
+                    for (var i = 0; i < data["专辑"].length; i++) {
+                        if (resultCount >= 5)
                             break;
                         mulStr += '<li>' + data["专辑"][i].albumName + '</li>';
                         resultCount++;
                     }
-                    console.log(mulStr);
                     $('.search-hint ul').append(mulStr);
                     $('.search-hint').css('visibility', 'visible');
                 },
@@ -675,7 +751,7 @@ KISSY.add(function (S, Node, Anim, XTemplate, IO, dd, ListTpl, TypeTpl) {
 
         function searchKeyWord() {
             var key = searchInput.val();
-            if(key === '')
+            if (key === '')
                 return;
             new IO({
                 type: "get",

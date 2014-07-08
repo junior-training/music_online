@@ -2,8 +2,8 @@
     margin: 0;
     padding: 0;
 }
-
-ul, ol{
+ul,
+ol {
     list-style: none;
 }
 html,
@@ -33,8 +33,9 @@ a {
     position: relative;
     width: 295px;
     height: 295px;
-    border: 5px solid rgba(255, 255, 255, 0.7);
+    border: 5px solid rgba(0, 0, 0, 0.6);
     border-radius: 50%;
+    background：linear-gradient(skyblue, blue);
     background-size: cover;
 }
 .player .p-panel {
@@ -333,7 +334,7 @@ a {
     width: 40px;
     height: 40px;
     border-radius: 40px;
-    opacity: 0.5;
+    opacity: 1;
     z-index: 300;
     -webkit-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
@@ -341,7 +342,7 @@ a {
 }
 .show-list:hover,
 .show-type:hover {
-    opacity: 1;
+    background-color: #90ee90;
 }
 .show-list {
     left: 20px;
@@ -461,33 +462,25 @@ a {
     -o-transition: transform 0.2s ease-out;
     transition: transform 0.2s ease-out;
 }
-
-.search-result ul{
+.search-result ul {
     width: 500px;
     margin: auto;
 }
-
-.search-result li{
+.search-result li {
     height: 25px;
     line-height: 25px;
 }
-
-.search-result a{
+.search-result a {
     display: inline-block;
     height: 25px;
     overflow: hidden;
 }
-
-.search-result li .t-song{
+.search-result li .t-song {
     width: 50%;
 }
-
-.search-result li .t-singer{
+.search-result li .t-singer {
     width: 20%;
 }
-
-
-
 .lyric {
     overflow: hidden;
     font-size: 15px;
@@ -496,13 +489,15 @@ a {
 }
 .lrc-text p {
     margin-top: 3px;
+    height: 15px;
+    overflow: hidden;
     color: #666;
 }
 .default-info {
     display: none;
 }
 .lrc-text {
-/*    display: none;*/
+    /*    display: none;*/
     -webkit-transition: transform 0.1s ease;
     -o-transition: transform 0.1s ease;
     transition: transform 0.1s ease;
@@ -520,7 +515,6 @@ a {
     border-radius: 50%;
     border: 2px solid;
 }
-
 .search-hint {
     position: absolute;
     top: -100px;
@@ -532,11 +526,9 @@ a {
     visibility: hidden;
     overflow: hidden;
 }
-
 .text-body {
     margin: 30px;
 }
-
 .time-info {
     position: absolute;
     top: 0;
@@ -552,7 +544,6 @@ a {
     border-radius: 5px;
     display: none;
 }
-
 .volIcon {
     position: absolute;
     width: 30px;
@@ -562,12 +553,10 @@ a {
     background-position: -195px -167px;
     cursor: pointer;
 }
-
-.volIcon.mute{
+.volIcon.mute {
     background-position: -195px -195px;
 }
-
-.barWrap{
+.barWrap {
     transform-origin: bottom;
     transform: rotateX(90deg);
     -webkit-transition: transform 0.3s ease;
@@ -575,7 +564,6 @@ a {
     transition: transform 0.3s ease;
     height: 120px;
 }
-
 .volBar {
     position: relative;
     top: 10px;
@@ -585,15 +573,14 @@ a {
     margin: 0 auto;
     cursor: pointer;
 }
-
 .volume {
     position: absolute;
     height: 150px;
     width: 30px;
     bottom: 30px;
     right: 100px;
+    z-index: 200;
 }
-
 .vol-handler {
     position: absolute;
     display: block;
@@ -604,4 +591,37 @@ a {
     border: 1px solid blue;
     left: -2px;
     top: 49%;
+}
+.prePage,
+.nextPage {
+    position: absolute;
+    top: 500px;
+    width: 100px;
+    height: 20px;
+    background: #666;
+    z-index: 150;
+    border: 1px solid;
+    outline: none;
+    color: #FFF;
+    display: none;
+    border-radius: 5px;
+}
+.prePage:hover,
+.nextPage:hover{
+    background: linear-gradient(to right bottom,#669999,#666);
+}
+.prePage.disable,
+.nextPage.disable{
+    border:none;
+    text-decoration: line-through
+}
+.prePage.disable:hover,
+.nextPage.disable:hover{
+    background: #666;
+}
+.prePage {
+    left: 10px;
+}
+.nextPage {
+    right: 10px;
 }
