@@ -25,8 +25,8 @@ public class DBConnector {
         Class.forName(driverClassName);
         // 用用户名、密码连接数据库
         con = DriverManager.getConnection(dbURL, userName, password);
-        if(!con.isClosed())
-            System.out.println("Succeeded connecting to the Database!");
+        /*if(!con.isClosed())
+            System.out.println("Succeeded connecting to the Database!");*/
 
         return con;
     }

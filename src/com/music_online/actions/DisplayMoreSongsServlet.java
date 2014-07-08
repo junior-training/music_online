@@ -42,14 +42,16 @@ public class DisplayMoreSongsServlet extends HttpServlet {
 		String indexStr = request.getParameter("index");
 		int index = Integer.parseInt(indexStr);
 		
-		if(1 == index)
+		/*if(1 == index)
 		{
 			transmittedNumber = index * 10;
 		}
 		else 
 		{
 			transmittedNumber = 10 + (index - 1)*15;
-		}
+		}*/
+		
+		transmittedNumber = (index - 1) * 15;
 		
 		if(type.equals("rank"))
 		{

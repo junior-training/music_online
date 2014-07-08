@@ -37,7 +37,7 @@ public class GetLyricServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Step in lyric!");
+		//System.out.println("Step in lyric!");
 		String idStr = request.getParameter("id");
 		int id = Integer.parseInt(idStr);
 		
@@ -54,7 +54,7 @@ public class GetLyricServlet extends HttpServlet {
 		//System.out.println(curProjectPath);
 		
 		lyricFilePath = curProjectPath + "/" + lyricFilePath;
-		System.out.println(lyricFilePath);
+		//System.out.println(lyricFilePath);
 		File lyricFile = new File(lyricFilePath);
 		
 		String lyricInfoJson;
